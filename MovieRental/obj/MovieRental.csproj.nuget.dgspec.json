@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\repos\\geo\\dNet\\MovieRental\\MovieRental\\MovieRental.csproj": {}
+    "C:\\repos\\geo\\dNet\\MicroServices\\Movie-Rental\\MovieRental\\MovieRental.csproj": {}
   },
   "projects": {
-    "C:\\repos\\geo\\dNet\\MovieRental\\MovieRental\\MovieRental.csproj": {
+    "C:\\repos\\geo\\dNet\\MicroServices\\Movie-Rental\\MovieRental\\MovieRental.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\repos\\geo\\dNet\\MovieRental\\MovieRental\\MovieRental.csproj",
+        "projectUniqueName": "C:\\repos\\geo\\dNet\\MicroServices\\Movie-Rental\\MovieRental\\MovieRental.csproj",
         "projectName": "MovieRental",
-        "projectPath": "C:\\repos\\geo\\dNet\\MovieRental\\MovieRental\\MovieRental.csproj",
+        "projectPath": "C:\\repos\\geo\\dNet\\MicroServices\\Movie-Rental\\MovieRental\\MovieRental.csproj",
         "packagesPath": "C:\\Users\\rafal.borek\\.nuget\\packages\\",
-        "outputPath": "C:\\repos\\geo\\dNet\\MovieRental\\MovieRental\\obj\\",
+        "outputPath": "C:\\repos\\geo\\dNet\\MicroServices\\Movie-Rental\\MovieRental\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\rafal.borek\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -45,6 +45,10 @@
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[7.0.9, )"
+            },
+            "MongoDB.Driver": {
+              "target": "Package",
+              "version": "[2.20.0, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
