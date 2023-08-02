@@ -1,14 +1,16 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MovieRental.Models;
 using MovieRental.Repositories;
 
 namespace MovieRental.Controllers
 {
-    [Route("api/movies/[controller]")]
+    [Route("api/movies")]
     [ApiController]
     public class MovieController : ControllerBase
     {
-        private readonly MovieRepository _movieRepository;
+        //private readonly MovieRepository _movieRepository;
+        private readonly IMovieRepository _movieRepository;
 
         public MovieController(IConfiguration configuration)
         {
@@ -20,6 +22,13 @@ namespace MovieRental.Controllers
         public IActionResult GetAllMovies()
         {
             var movies = _movieRepository.GetAllMovies();
+            return Ok(movies);
+        }
+
+        [HttpGet("{category}")]
+        public IActionResult GetMovieByCategory(string category) 
+        {
+            var movies = _movieRepository.GetMoviesByCategory(category);
             return Ok(movies);
         }
     }
