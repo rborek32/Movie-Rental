@@ -1,0 +1,322 @@
+[
+  {
+    "_id": { "$oid": "64c8caca9c8b1185fb6c9322" },
+    "Title": "Scream",
+    "MovieCategory": "Horror",
+    "MovieId": 1,
+    "ReleaseDate": 2005,
+    "Rating": 8
+  },
+  {
+    "_id": { "$oid": "64c8caca9c8b1185fb6c9323" },
+    "Title": "The Shining",
+    "MovieCategory": "Horror",
+    "MovieId": 2,
+    "ReleaseDate": 1980,
+    "Rating": 9
+  },
+  {
+    "_id": { "$oid": "64c8caca9c8b1185fb6c9324" },
+    "Title": "Get Out",
+    "MovieCategory": "Horror",
+    "MovieId": 3,
+    "ReleaseDate": 2017,
+    "Rating": 7.5
+  },
+  {
+    "_id": { "$oid": "64c8caca9c8b1185fb6c9325" },
+    "Title": "Psycho",
+    "MovieCategory": "Horror",
+    "MovieId": 4,
+    "ReleaseDate": 1960,
+    "Rating": 8.5
+  },
+  {
+    "_id": { "$oid": "64c8caca9c8b1185fb6c9326" },
+    "Title": "A Quiet Place",
+    "MovieCategory": "Horror",
+    "MovieId": 5,
+    "ReleaseDate": 2018,
+    "Rating": 7.8
+  },
+  {
+    "_id": { "$oid": "64c8caca9c8b1185fb6c9327" },
+    "Title": "The Conjuring",
+    "MovieCategory": "Horror",
+    "MovieId": 6,
+    "ReleaseDate": 2013,
+    "Rating": 7.5
+  },
+  {
+    "_id": { "$oid": "64c8caca9c8b1185fb6c9328" },
+    "Title": "The Babadook",
+    "MovieCategory": "Horror",
+    "MovieId": 7,
+    "ReleaseDate": 2014,
+    "Rating": 6.8
+  },
+  {
+    "_id": { "$oid": "64c8caca9c8b1185fb6c9329" },
+    "Title": "Halloween",
+    "MovieCategory": "Horror",
+    "MovieId": 8,
+    "ReleaseDate": 1978,
+    "Rating": 7.7
+  },
+  {
+    "_id": { "$oid": "64c8caca9c8b1185fb6c9330" },
+    "Title": "It Follows",
+    "MovieCategory": "Horror",
+    "MovieId": 9,
+    "ReleaseDate": 2014,
+    "Rating": 6.8
+  },
+  {
+    "_id": { "$oid": "64c8caca9c8b1185fb6c9331" },
+    "Title": "The Sixth Sense",
+    "MovieCategory": "Horror",
+    "MovieId": 10,
+    "ReleaseDate": 1999,
+    "Rating": 8.1
+  },
+  {
+    "_id": { "$oid": "64c8caca9c8b1185fb6c9332" },
+    "Title": "Se7en",
+    "MovieCategory": "Thriller",
+    "MovieId": 11,
+    "ReleaseDate": 1995,
+    "Rating": 8.6
+  },
+  {
+    "_id": { "$oid": "64c8caca9c8b1185fb6c9333" },
+    "Title": "The Silence of the Lambs",
+    "MovieCategory": "Thriller",
+    "MovieId": 12,
+    "ReleaseDate": 1991,
+    "Rating": 8.6
+  },
+  {
+    "_id": { "$oid": "64c8caca9c8b1185fb6c9334" },
+    "Title": "Memento",
+    "MovieCategory": "Thriller",
+    "MovieId": 13,
+    "ReleaseDate": 2000,
+    "Rating": 8.4
+  },
+  {
+    "_id": { "$oid": "64c8caca9c8b1185fb6c9335" },
+    "Title": "Gone Girl",
+    "MovieCategory": "Thriller",
+    "MovieId": 14,
+    "ReleaseDate": 2014,
+    "Rating": 8.1
+  },
+  {
+    "_id": { "$oid": "64c8caca9c8b1185fb6c9336" },
+    "Title": "Inception",
+    "MovieCategory": "Thriller",
+    "MovieId": 15,
+    "ReleaseDate": 2010,
+    "Rating": 8.8
+  },
+  {
+    "_id": { "$oid": "64c8caca9c8b1185fb6c9337" },
+    "Title": "The Departed",
+    "MovieCategory": "Thriller",
+    "MovieId": 16,
+    "ReleaseDate": 2006,
+    "Rating": 8.5
+  },
+  {
+    "_id": { "$oid": "64c8caca9c8b1185fb6c9338" },
+    "Title": "Fight Club",
+    "MovieCategory": "Thriller",
+    "MovieId": 17,
+    "ReleaseDate": 1999,
+    "Rating": 8.8
+  },
+  {
+    "_id": { "$oid": "64c8caca9c8b1185fb6c9339" },
+    "Title": "The Truman Show",
+    "MovieCategory": "Comedy",
+    "MovieId": 18,
+    "ReleaseDate": 1998,
+    "Rating": 8.1
+  },
+  {
+    "_id": { "$oid": "64c8caca9c8b1185fb6c9340" },
+    "Title": "Superbad",
+    "MovieCategory": "Comedy",
+    "MovieId": 19,
+    "ReleaseDate": 2007,
+    "Rating": 7.6
+  },
+  {
+    "_id": { "$oid": "64c8caca9c8b1185fb6c9341" },
+    "Title": "Anchorman: The Legend of Ron Burgundy",
+    "MovieCategory": "Comedy",
+    "MovieId": 20,
+    "ReleaseDate": 2004,
+    "Rating": 7.2
+  },
+  {
+    "_id": { "$oid": "64c8caca9c8b1185fb6c9342" },
+    "Title": "The Grand Budapest Hotel",
+    "MovieCategory": "Comedy",
+    "MovieId": 21,
+    "ReleaseDate": 2014,
+    "Rating": 8.1
+  },
+  {
+    "_id": { "$oid": "64c8caca9c8b1185fb6c9343" },
+    "Title": "Deadpool",
+    "MovieCategory": "Comedy",
+    "MovieId": 22,
+    "ReleaseDate": 2016,
+    "Rating": 8
+  },
+  {
+    "_id": { "$oid": "64c8caca9c8b1185fb6c9344" },
+    "Title": "Shaun of the Dead",
+    "MovieCategory": "Comedy",
+    "MovieId": 23,
+    "ReleaseDate": 2004,
+    "Rating": 7.9
+  },
+  {
+    "_id": { "$oid": "64c8caca9c8b1185fb6c9345" },
+    "Title": "When Harry Met Sally...",
+    "MovieCategory": "Romance",
+    "MovieId": 24,
+    "ReleaseDate": 1989,
+    "Rating": 7.6
+  },
+  {
+    "_id": { "$oid": "64c8caca9c8b1185fb6c9346" },
+    "Title": "500 Days of Summer",
+    "MovieCategory": "Romance",
+    "MovieId": 25,
+    "ReleaseDate": 2009,
+    "Rating": 7.7
+  },
+  {
+    "_id": { "$oid": "64c8caca9c8b1185fb6c9347" },
+    "Title": "La La Land",
+    "MovieCategory": "Romance",
+    "MovieId": 26,
+    "ReleaseDate": 2016,
+    "Rating": 8
+  },
+  {
+    "_id": { "$oid": "64c8caca9c8b1185fb6c9348" },
+    "Title": "Eternal Sunshine of the Spotless Mind",
+    "MovieCategory": "Romance",
+    "MovieId": 27,
+    "ReleaseDate": 2004,
+    "Rating": 8.3
+  },
+  {
+    "_id": { "$oid": "64c8caca9c8b1185fb6c9349" },
+    "Title": "Pride and Prejudice",
+    "MovieCategory": "Romance",
+    "MovieId": 28,
+    "ReleaseDate": 2005,
+    "Rating": 7.8
+  },
+  {
+    "_id": { "$oid": "64c8caca9c8b1185fb6c9350" },
+    "Title": "The Notebook",
+    "MovieCategory": "Romance",
+    "MovieId": 29,
+    "ReleaseDate": 2004,
+    "Rating": 7.8
+  },
+  {
+    "_id": { "$oid": "64c8caca9c8b1185fb6c9351" },
+    "Title": "The Fault in Our Stars",
+    "MovieCategory": "Romance",
+    "MovieId": 30,
+    "ReleaseDate": 2014,
+    "Rating": 7.7
+  },
+  {
+    "_id": { "$oid": "64c8caca9c8b1185fb6c9352" },
+    "Title": "Her",
+    "MovieCategory": "Romance",
+    "MovieId": 31,
+    "ReleaseDate": 2013,
+    "Rating": 8
+  },
+  {
+    "_id": { "$oid": "64c8caca9c8b1185fb6c9353" },
+    "Title": "The Proposal",
+    "MovieCategory": "Romance",
+    "MovieId": 32,
+    "ReleaseDate": 2009,
+    "Rating": 6.7
+  },
+  {
+    "_id": { "$oid": "64c8caca9c8b1185fb6c9354" },
+    "Title": "The Princess Bride",
+    "MovieCategory": "Romance",
+    "MovieId": 33,
+    "ReleaseDate": 1987,
+    "Rating": 8.1
+  },
+  {
+    "_id": { "$oid": "64c8caca9c8b1185fb6c9355" },
+    "Title": "Gone with the Wind",
+    "MovieCategory": "Romance",
+    "MovieId": 34,
+    "ReleaseDate": 1939,
+    "Rating": 8.1
+  },
+  {
+    "_id": { "$oid": "64c8caca9c8b1185fb6c9356" },
+    "Title": "Titanic",
+    "MovieCategory": "Romance",
+    "MovieId": 35,
+    "ReleaseDate": 1997,
+    "Rating": 7.8
+  },
+  {
+    "_id": { "$oid": "64c8caca9c8b1185fb6c9357" },
+    "Title": "Crazy Rich Asians",
+    "MovieCategory": "Romance",
+    "MovieId": 36,
+    "ReleaseDate": 2018,
+    "Rating": 6.9
+  },
+  {
+    "_id": { "$oid": "64c8caca9c8b1185fb6c9358" },
+    "Title": "Notting Hill",
+    "MovieCategory": "Romance",
+    "MovieId": 37,
+    "ReleaseDate": 1999,
+    "Rating": 7.1
+  },
+  {
+    "_id": { "$oid": "64c8caca9c8b1185fb6c9359" },
+    "Title": "The Hangover",
+    "MovieCategory": "Comedy",
+    "MovieId": 38,
+    "ReleaseDate": 2009,
+    "Rating": 7.7
+  },
+  {
+    "_id": { "$oid": "64c8caca9c8b1185fb6c9360" },
+    "Title": "Zombieland",
+    "MovieCategory": "Comedy",
+    "MovieId": 39,
+    "ReleaseDate": 2009,
+    "Rating": 7.6
+  },
+  {
+    "_id": { "$oid": "64c8caca9c8b1185fb6c9361" },
+    "Title": "Anchorman 2: The Legend Continues",
+    "MovieCategory": "Comedy",
+    "MovieId": 40,
+    "ReleaseDate": 2013,
+    "Rating": 6.3
+  }
+]

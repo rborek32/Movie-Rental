@@ -7,11 +7,12 @@ namespace MovieRental.Models
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+        public string? Id { get; set; }
+
         public int MovieId { get; set; }
         public string Title { get; set; }
         public string MovieCategory { get; set; }
         public int ReleaseDate { get; set; }
-        public float Rating { get; set; }
+        public decimal Rating { get; set; }
     }
 }
