@@ -1,15 +1,13 @@
 <template>
-  <header>
-    <nav>
-      <div class="nav__title">
-        <h1 class="title">Movies</h1>
-        <ul class="nav__links">
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Reservations</a></li>
+  <header class="header">
+    <h1 class="title">Movie library</h1>
+    <nav class="navbar">
+        <ul class="nav_buttons">
+          <a href="#">Home</a>
+          <a href="#">Reservations</a>
+          <a href="#">Contact</a>
         </ul>
-      </div>
     </nav>
-    <a class="cta" href="#"><button></button>Contact</a>
   </header>
 
   <body>
@@ -40,6 +38,69 @@
   </body>
 </template>
   
+<style>
+*{
+  margin: 0;
+  padding: 10;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  padding-top: 40px;
+}
+
+.header{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  padding: 20px ;
+  background: rgb(28, 34, 34);
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+}
+
+.title{
+  font-size: 32px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.navbar {
+  display: flex;
+  align-items: center; 
+}
+
+.navbar a{
+  position: relative;
+  font-size: 18px;
+  color: #fff;
+  font-weight: 500;
+  text-decoration: none;
+  margin-left: 40px;
+}
+
+.navbar a::before{
+  content: "";
+  position:absolute;
+  top:100%;
+  left:0;
+  width:0;
+  height:1px;
+  background: #fff;
+  transition: 0.3s;
+}
+
+.navbar a:hover::before{
+  width:100%
+}
+
+</style>
+
 <script>
 import axios from 'axios';
 
@@ -89,77 +150,3 @@ export default {
 };
 </script>
 
-<style>
-.active-column:hover {
-  cursor: pointer;
-  text-decoration: underline;
-}
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 30px;
-  background-color: #24252a;
-}
-
-.nav__title {
-  display: flex;
-  align-items: center;
-  padding: 0px 15%;
-}
-
-.nav__links {
-  list-style: none;
-  display: flex;
-  justify-content: center;
-  margin-right: auto;
-}
-
-.nav__links a,
-.cta,
-.title {
-  font-family: "Lucida Console", sans-serif;
-  font-weight: 500;
-  color: #edf0f1;
-  text-decoration: none;
-}
-
-.nav__links li {
-  padding: 10px 25px;
-}
-
-.nav__links li a {
-  font-family: "Lucida Console", sans-serif;
-  font-weight: 500;
-  color: black;
-  text-decoration: none;
-  background-color: white; /* Add white background */
-  padding: 8px 10px; 
-  border-radius: 10px;
-  transition: color 0.3s ease 0s;
-}
-
-.nav__links li a:hover {
-  color: #0088a9;
-}
-
-.cta {
-  padding: 9px 25px;
-  background-color: rgba(0, 136, 169, 1);
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: background-color 0.3s ease 0s;
-}
-
-.cta:hover {
-  background-color: rgba(0, 136, 169, 0.8);
-}
-</style>
