@@ -2,15 +2,39 @@
   <header class="header">
     <h1 class="title">Movie library</h1>
     <nav class="navbar">
-        <ul class="nav_buttons">
-          <a href="#">Home</a>
-          <a href="#">Reservations</a>
-          <a href="#">Contact</a>
-        </ul>
+      <ul class="nav_buttons">
+        <a href="#">Home</a>
+        <a href="#">Reservations</a>
+        <a href="#">Contact</a>
+      </ul>
     </nav>
   </header>
 
   <body>
+    <div class="dropdown">
+      <h2>Add, Update, or Delete Movies</h2>
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+        Dropdown
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+        <button class="dropdown-item" type="button">Add movie</button>
+        <button class="dropdown-item" type="button">Another action</button>
+        <button class="dropdown-item" type="button">Something else here</button>
+      </div>
+    </div>
+
+
+
+    <div class="filter-panel">
+      <label for="genreFilter">Filter by Category:</label>
+      <select id="genreFilter" v-model="selectedGenre">
+        <option value="All">All</option>
+        <option value="Horror">Horror</option>
+        <option value="Comedy">Comedy</option>
+      </select>
+    </div>
+
     <div class="container mt-5">
       <div class="table-responsive">
         <table class="table table-striped table-hover">
@@ -39,7 +63,7 @@
 </template>
   
 <style>
-*{
+* {
   margin: 0;
   padding: 10;
   box-sizing: border-box;
@@ -47,23 +71,24 @@
 }
 
 body {
-  padding-top: 40px;
+  padding-top: 60px;
 }
 
-.header{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  padding: 20px ;
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px;
   background: rgb(28, 34, 34);
-  display:flex;
+  display: flex;
   justify-content: space-between;
   align-items: center;
   z-index: 100;
 }
 
-.title{
+.title {
+  left: 10%;
   font-size: 32px;
   color: #fff;
   text-decoration: none;
@@ -72,10 +97,11 @@ body {
 
 .navbar {
   display: flex;
-  align-items: center; 
+  align-items: center;
+  right: 15%;
 }
 
-.navbar a{
+.navbar a {
   position: relative;
   font-size: 18px;
   color: #fff;
@@ -84,21 +110,24 @@ body {
   margin-left: 40px;
 }
 
-.navbar a::before{
+.navbar a::before {
   content: "";
-  position:absolute;
-  top:100%;
-  left:0;
-  width:0;
-  height:1px;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 0;
+  height: 1px;
   background: #fff;
   transition: 0.3s;
 }
 
-.navbar a:hover::before{
-  width:100%
+.navbar a:hover::before {
+  width: 100%
 }
 
+.filter-panel {
+  padding-left: 10%;
+}
 </style>
 
 <script>
@@ -109,15 +138,23 @@ export default {
     return {
       movies: [],
       sortByColumn: 'movieId',
-      sortDirection: 'asc'
+      sortDirection: 'asc',
+      selectedGenre: 'All',
+      movieId: null,
+      newMovieName: '',
+      newMovieRating: '',
+      selectedAction: null
     };
   },
   created() {
     this.getMovies();
   },
   computed: {
+    filteredMovies() {
+      return this.selectedGenre === 'All' ? this.movies : this.movies.filter(movie => movie.movieCategory === this.selectedGenre);
+    },
     sortedMovies() {
-      const sorted = [...this.movies];
+      const sorted = [...this.filteredMovies];
       sorted.sort((a, b) => {
         const modifier = this.sortDirection === 'asc' ? 1 : -1;
         const column = this.sortByColumn;
@@ -149,4 +186,3 @@ export default {
   }
 };
 </script>
-
