@@ -11,51 +11,100 @@
     </nav>
   </header>
 
-  <body>
-    <aside class="filter-panel">
-        <div class="filter-content">
-          <h2>Filter Movies</h2>
-          <label>Title: </label>
-          <input type="text" class="filter-input" placeholder="Enter title...">
-          <label>Category: </label>
-          <select id="genreFilter" class="filter-select" v-model="selectedGenre">
-            <option value="All">All</option>
-            <option value="Horror">Horror</option>
-            <option value="Comedy">Comedy</option>
-          </select>
-        </div>
-      </aside>
 
-    <main>
-      <div class="table-responsive">
-        <table class="table table-striped table-hover">
-          <thead class="thead-dark">
-            <tr>
-              <th scope="col" @click="sortBy('movieId')" :class="{ 'active-column': sortByColumn === 'movieId' }">Id</th>
-              <th scope="col" @click="sortBy('title')" :class="{ 'active-column': sortByColumn === 'title' }">Title</th>
-              <th scope="col" @click="sortBy('movieCategory')"
-                :class="{ 'active-column': sortByColumn === 'movieCategory' }">Category</th>
-              <th scope="col" @click="sortBy('releaseDate')" :class="{ 'active-column': sortByColumn === 'releaseDate' }">
-                Release Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="movie in sortedMovies" :key="movie.movieId">
-              <td>{{ movie.movieId }}</td>
-              <td>{{ movie.title }}</td>
-              <td>{{ movie.movieCategory }}</td>
-              <td>{{ movie.releaseDate }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </main>
+  <body>
+        <div class="movie-editor">
+          <h2>Add, Update, or Delete Movies</h2>
+          <form class="form-horizontal">
+            <div class="form-group">
+              <label class="control-label">Id</label>
+              <input type="number" class="form-control" v-model="movieId">
+              <label class="control-label">Movie Name</label>
+              <input type="text" class="form-control" v-model="newMovieName">
+              <label class="control-label">Rating</label>
+              <input type="number" class="form-control" v-model="newMovieRating">
+            </div>
+          </form>
+          <div class="btn-group" role="group" style="margin-top: 15px;">
+            <button class="btn btn-primary" @click="addMovie">Add Movie</button>
+            <button class="btn btn-success" @click="updateMovie">Update Movie</button>
+            <button class="btn btn-danger" @click="deleteMovie">Delete Movie</button>
+          </div>
+        </div>
   </body>
 </template>
   
 <style>
-@import "@/assets/styles.css";
+* {
+  margin: 0;
+  padding: 10;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
 
+body {
+  padding-top: 60px;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px;
+  background: rgb(28, 34, 34);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+}
+
+.title {
+  left: 10%;
+  font-size: 32px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  right: 15%;
+}
+
+.navbar a {
+  position: relative;
+  font-size: 18px;
+  color: #fff;
+  font-weight: 500;
+  text-decoration: none;
+  margin-left: 40px;
+}
+
+.navbar a::before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: #fff;
+  transition: 0.3s;
+}
+
+.navbar a:hover::before {
+  width: 100%
+}
+
+.filter-panel {
+  padding-left: 10%;
+}
+.movie-editor{
+  width: 15%;
+    margin: 0 auto;
+
+}
 </style>
 
 <script>
