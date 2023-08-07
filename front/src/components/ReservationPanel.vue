@@ -35,76 +35,7 @@
 </template>
   
 <style>
-* {
-  margin: 0;
-  padding: 10;
-  box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
-}
-
-body {
-  padding-top: 60px;
-}
-
-.header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  padding: 20px;
-  background: rgb(28, 34, 34);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 100;
-}
-
-.title {
-  left: 10%;
-  font-size: 32px;
-  color: #fff;
-  text-decoration: none;
-  font-weight: 700;
-}
-
-.navbar {
-  display: flex;
-  align-items: center;
-  right: 15%;
-}
-
-.navbar a {
-  position: relative;
-  font-size: 18px;
-  color: #fff;
-  font-weight: 500;
-  text-decoration: none;
-  margin-left: 40px;
-}
-
-.navbar a::before {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 0;
-  height: 1px;
-  background: #fff;
-  transition: 0.3s;
-}
-
-.navbar a:hover::before {
-  width: 100%
-}
-
-.filter-panel {
-  padding-left: 10%;
-}
-.movie-editor{
-  width: 15%;
-    margin: 0 auto;
-
-}
+@import "@/assets/styles.css";
 </style>
 
 <script>

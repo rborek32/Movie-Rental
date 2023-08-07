@@ -11,7 +11,7 @@
     </nav>
   </header>
 
-  <body>
+  <body class="body">
     <aside class="filter-panel">
         <div class="filter-content">
           <h2>Filter Movies</h2>
@@ -28,6 +28,7 @@
 
     <main>
       <div class="table-responsive">
+        <h2>Movies</h2>
         <table class="table table-striped table-hover">
           <thead class="thead-dark">
             <tr>
@@ -55,7 +56,6 @@
   
 <style>
 @import "@/assets/styles.css";
-
 </style>
 
 <script>
@@ -110,39 +110,6 @@ export default {
         this.sortByColumn = column;
         this.sortDirection = 'asc';
       }
-    },
-    addMovie() {
-      const newMovieBody = [{
-        movie: this.newMovieName,
-        rating: this.newMovieRating,
-      }];
-
-      axios.post(`${process.env.VUE_APP_BACKEND_URL}/addMovies`, newMovieBody).then((response) => {
-        console.log(`${process.env.VUE_APP_BACKEND_URL}/addMovies`
-          +"\nMovie added successfully:", response.data);
-          this.fetchMovies();
-      });
-    },
-    updateMovie() {
-      const updatedMovieBody = {
-        movie: this.newMovieName,
-        rating: this.newMovieRating
-      }
-      var id = this.movieId;
-      axios.put(`${process.env.VUE_APP_BACKEND_URL}/update/${id}`, updatedMovieBody).then((response) => {
-        console.log(`${process.env.VUE_APP_BACKEND_URL}/update/${id}`
-          +"\nMovie updated successfully:", response.data);
-          this.fetchMovies();
-      });
-
-    },
-    deleteMovie() {
-      var id = this.movieId;
-      axios.delete(`${process.env.VUE_APP_BACKEND_URL}/delete/${id}`).then((response) => {
-        console.log(`${process.env.VUE_APP_BACKEND_URL}/delete/${id}`
-          +"\nMovie deleted successfully:", response.data);
-          this.fetchMovies();
-      });
     },
   }
 };

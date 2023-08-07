@@ -11,100 +11,34 @@
     </nav>
   </header>
 
-
   <body>
-        <div class="movie-editor">
-          <h2>Add, Update, or Delete Movies</h2>
-          <form class="form-horizontal">
-            <div class="form-group">
-              <label class="control-label">Id</label>
-              <input type="number" class="form-control" v-model="movieId">
-              <label class="control-label">Movie Name</label>
-              <input type="text" class="form-control" v-model="newMovieName">
-              <label class="control-label">Rating</label>
-              <input type="number" class="form-control" v-model="newMovieRating">
-            </div>
-          </form>
-          <div class="btn-group" role="group" style="margin-top: 15px;">
-            <button class="btn btn-primary" @click="addMovie">Add Movie</button>
-            <button class="btn btn-success" @click="updateMovie">Update Movie</button>
-            <button class="btn btn-danger" @click="deleteMovie">Delete Movie</button>
-          </div>
+    <div class="movie-editor">
+      <h2>Add, Update, or Delete Movies</h2>
+      <form class="form-horizontal">
+        <div class="form-group">
+          <label class="control-label">Id</label>
+          <input type="number" class="form-control" v-model="movieId" required>
+          <label class="control-label">Title</label>
+          <input type="text" class="form-control" v-model="title" required>
+          <label class="text">Category</label>
+          <input type="text" class="form-control" v-model="movieCategory" required>
+          <label class="control-label">Release year</label>
+          <input type="number" class="form-control" v-model="releaseDate" required>
+          <label class="control-label">Rating</label>
+          <input type="number" class="form-control" v-model="rating" required>
         </div>
+      </form>
+      <div class="btn-group" role="group" style="margin-top: 15px;">
+        <button class="btn btn-primary" @click="addMovie">Add Movie</button>
+        <button class="btn btn-success" @click="updateMovie">Update Movie</button>
+        <button class="btn btn-danger" @click="deleteMovie">Delete Movie</button>
+      </div>
+    </div>
   </body>
 </template>
   
 <style>
-* {
-  margin: 0;
-  padding: 10;
-  box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
-}
-
-body {
-  padding-top: 60px;
-}
-
-.header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  padding: 20px;
-  background: rgb(28, 34, 34);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 100;
-}
-
-.title {
-  left: 10%;
-  font-size: 32px;
-  color: #fff;
-  text-decoration: none;
-  font-weight: 700;
-}
-
-.navbar {
-  display: flex;
-  align-items: center;
-  right: 15%;
-}
-
-.navbar a {
-  position: relative;
-  font-size: 18px;
-  color: #fff;
-  font-weight: 500;
-  text-decoration: none;
-  margin-left: 40px;
-}
-
-.navbar a::before {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 0;
-  height: 1px;
-  background: #fff;
-  transition: 0.3s;
-}
-
-.navbar a:hover::before {
-  width: 100%
-}
-
-.filter-panel {
-  padding-left: 10%;
-}
-.movie-editor{
-  width: 15%;
-    margin: 0 auto;
-
-}
+@import "@/assets/styles.css";
 </style>
 
 <script>
@@ -113,86 +47,47 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      movies: [],
-      sortByColumn: 'movieId',
-      sortDirection: 'asc',
-      selectedGenre: 'All',
-      movieId: null,
-      newMovieName: '',
-      newMovieRating: '',
-      selectedAction: null
+      movieId: 0,
+      title: "",
+      movieCategory: "",
+      releaseDate: 0,
+      rating: 0
     };
   },
-  created() {
-    this.getMovies();
-  },
-  computed: {
-    filteredMovies() {
-      return this.selectedGenre === 'All' ? this.movies : this.movies.filter(movie => movie.movieCategory === this.selectedGenre);
-    },
-    sortedMovies() {
-      const sorted = [...this.filteredMovies];
-      sorted.sort((a, b) => {
-        const modifier = this.sortDirection === 'asc' ? 1 : -1;
-        const column = this.sortByColumn;
-        if (a[column] < b[column]) return -1 * modifier;
-        if (a[column] > b[column]) return 1 * modifier;
-        return 0;
-      });
-      return sorted;
-    },
-  },
   methods: {
-    getMovies() {
-      axios.get(`${process.env.VUE_APP_BACKEND_URL}/api/movies`)
-        .then(response => {
-          this.movies = response.data;
-        })
-        .catch(error => {
-          console.error('Error fetching movies:', error);
-        });
-    },
-    sortBy(column) {
-      if (this.sortByColumn === column) {
-        this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
-      } else {
-        this.sortByColumn = column;
-        this.sortDirection = 'asc';
-      }
-    },
-    addMovie() {
-      const newMovieBody = [{
-        movie: this.newMovieName,
-        rating: this.newMovieRating,
-      }];
+  addMovie() {
+    const newMovieBody = {
+      movieId: this.movieId,
+      title: this.title,
+      movieCategory: this.movieCategory,
+      releaseDate: this.releaseDate,
+      rating: this.rating
+    };
 
-      axios.post(`${process.env.VUE_APP_BACKEND_URL}/addMovies`, newMovieBody).then((response) => {
-        console.log(`${process.env.VUE_APP_BACKEND_URL}/addMovies`
-          +"\nMovie added successfully:", response.data);
-          this.fetchMovies();
-      });
-    },
-    updateMovie() {
-      const updatedMovieBody = {
-        movie: this.newMovieName,
-        rating: this.newMovieRating
-      }
-      var id = this.movieId;
-      axios.put(`${process.env.VUE_APP_BACKEND_URL}/update/${id}`, updatedMovieBody).then((response) => {
-        console.log(`${process.env.VUE_APP_BACKEND_URL}/update/${id}`
-          +"\nMovie updated successfully:", response.data);
-          this.fetchMovies();
-      });
+    axios.post(`${process.env.VUE_APP_BACKEND_URL}/api/movies`, newMovieBody).then((response) => {
+      console.log(`${process.env.VUE_APP_BACKEND_URL}/movies`
+        + "\nMovie added successfully:", response.data);
+    });
+  },
+  updateMovie() {
+    const updatedMovieBody = {
+      movie: this.newMovieName,
+      rating: this.newMovieRating
+    }
+    var id = this.movieId;
+    axios.put(`${process.env.VUE_APP_BACKEND_URL}/update/${id}`, updatedMovieBody).then((response) => {
+      console.log(`${process.env.VUE_APP_BACKEND_URL}/update/${id}`
+        + "\nMovie updated successfully:", response.data);
+    });
 
-    },
-    deleteMovie() {
-      var id = this.movieId;
-      axios.delete(`${process.env.VUE_APP_BACKEND_URL}/delete/${id}`).then((response) => {
-        console.log(`${process.env.VUE_APP_BACKEND_URL}/delete/${id}`
-          +"\nMovie deleted successfully:", response.data);
-          this.fetchMovies();
-      });
-    },
-  }
+  },
+  deleteMovie() {
+    var id = this.movieId;
+    axios.delete(`${process.env.VUE_APP_BACKEND_URL}/api/movies/${id}`).then((response) => {
+      console.log(`${process.env.VUE_APP_BACKEND_URL}/delete/${id}`
+        + "\nMovie deleted successfully:", response.data);
+    });
+  },
+}
 };
 </script>
