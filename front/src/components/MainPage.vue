@@ -45,7 +45,7 @@
               <td>{{ movie.title }}</td>
               <td>{{ movie.movieCategory }}</td>
               <td>{{ movie.releaseDate }}</td>
-              <td><button class="btn btn-primary">Reserve</button></td>
+              <td><button class="btn btn-primary" @click="addReservation(movie)">Reserve</button></td>
             </tr>
           </tbody>
         </table>
@@ -111,6 +111,27 @@ export default {
         this.sortDirection = 'asc';
       }
     },
+    addReservation(movie){
+
+      var today = new Date();
+      var dd = String(today.getDate()).padStart(2, '0');
+      var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+      var yyyy = today.getFullYear();
+
+      today = yyyy + '-' + dd + '-' + mm;
+
+      const reservationBody = {
+        id: movie.movieId,
+        startDate: today,
+        endDate: today,
+        movie: movie.title
+      };
+
+      axios.post(`${process.env.VUE_APP_BACKEND_URL_RESERVATIONS}/api/reservations`, reservationBody).then((response) => {
+        console.log(`${process.env.VUE_APP_BACKEND_URL_RESERVATIONS}/addMovies`
+          +"\nMovie added successfully:", response.data);
+      })
+    }
   }
 };
 </script>
