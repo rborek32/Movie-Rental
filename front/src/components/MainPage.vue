@@ -115,7 +115,7 @@ export default {
 
       var today = new Date();
       var dd = String(today.getDate()).padStart(2, '0');
-      var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+      var mm = String(today.getMonth() + 1).padStart(2, '0');
       var yyyy = today.getFullYear();
 
       today = yyyy + '-' + dd + '-' + mm;
@@ -124,7 +124,7 @@ export default {
         id: movie.movieId,
         startDate: today,
         endDate: today,
-        movie: movie.title
+        movieTitle: movie.title
       };
 
       axios.post(`${process.env.VUE_APP_BACKEND_URL_RESERVATIONS}/api/reservations`, reservationBody).then((response) => {
