@@ -16,12 +16,21 @@ namespace ReservationService.Controllers
             string connectionString = configuration.GetConnectionString("MongoDB");
             _reservationRepository = new ReservationRepository(connectionString, "Movie", "Reservations");
         }
+
         [HttpGet("/")]
         public IActionResult GetAllReservations()
         {
-            return Ok("Works");
+            var reservations = _reservationRepository.GetAllReservations();
+            return Ok(reservations);
         }
-        
+
+        [HttpGet("/amount/movieTitle")]
+        public async Task<ActionResult<long>> GetAmountOfReservations(string title)
+        {
+            long count = await _reservationRepository.GetAmountOfReservations(title);
+            return count;
+        }
+
         [HttpPost]
         public async Task<IActionResult> PostMovie([FromBody] Reservation reservation)
         {
@@ -36,12 +45,12 @@ namespace ReservationService.Controllers
             }
         }
 
-        [HttpDelete("/delete/{Id}")]
-        public IActionResult DeleteReservation(int Id)
+        [HttpDelete("/delete/{movieTitle}")]
+        public IActionResult DeleteReservation(string movieTitle)
         {
             try
             {
-                var reservation = _reservationRepository.GetReservationById(Id);
+                var reservation = _reservationRepository.GetReservationByTitle(movieTitle);
                 if (reservation == null)
                 {
                     return NotFound("Reservation not found.");
@@ -53,6 +62,26 @@ namespace ReservationService.Controllers
             catch (Exception ex)
             {
                 return BadRequest($"Failed to delete movie. Error: {ex.Message}");
+            }
+        }
+
+        [HttpDelete("/delete/many/{movieTitle}")]
+        public IActionResult DeleteReservationsByTitle(string movieTitle)
+        {
+            try
+            {
+                long deletedCount = _reservationRepository.RemoveReservationsByTitle(movieTitle);
+
+                if (deletedCount == 0)
+                {
+                    return NotFound("No reservations found for the given movie title.");
+                }
+
+                return Ok($"Deleted {deletedCount} reservations with the given movie title.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Failed to delete reservations. Error: {ex.Message}");
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver;
+﻿using MongoDB.Bson;
+using MongoDB.Driver;
 using ReservationService.Models;
 
 namespace ReservationService.Repositories
@@ -14,8 +15,16 @@ namespace ReservationService.Repositories
             _collection = database.GetCollection<Reservation>(collectionName);
         }
 
+        public List<Reservation> GetAllReservations()
+        {
+            return _collection.Find(new BsonDocument()).ToList();
+        }
+
         public async Task AddReservation<T>(Reservation reservation)
         {
+            long count = await GetCountOfReservations();
+            reservation.Id = (int)count + 1;
+
             await _collection.InsertOneAsync(reservation);
         }
 
@@ -25,20 +34,35 @@ namespace ReservationService.Repositories
             await _collection.DeleteOneAsync(filter);
         }
 
-        public Task RemoveReservation(int Id)
+        public async Task<long> GetAmountOfReservations(string Title)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task GetAmountOfReservations(string Title)
-        {
-            throw new NotImplementedException();
+            var filter = Builders<Reservation>.Filter.Eq(h=>h.MovieTitle, Title);
+            return await _collection.CountDocumentsAsync(filter);
         }
         
         public Reservation GetReservationById(int id)
         {
             var filter = Builders<Reservation>.Filter.Eq(h => h.Id, id);
             return _collection.Find(filter).FirstOrDefault();
+        }
+
+        public Reservation GetReservationByTitle(string Title)
+        {
+            var filter = Builders<Reservation>.Filter.Eq(h => h.MovieTitle, Title);
+            return _collection.Find(filter).FirstOrDefault();
+        }
+
+        public async Task<long> GetCountOfReservations()
+        {
+            var filter = Builders<Reservation>.Filter.Empty;
+            return await _collection.CountDocumentsAsync(filter);
+        }
+
+        public long RemoveReservationsByTitle(string movieTitle)
+        {
+            var filter = Builders<Reservation>.Filter.Eq(r => r.MovieTitle, movieTitle);
+            var result = _collection.DeleteMany(filter);
+            return result.DeletedCount;
         }
     }
 }
