@@ -31,6 +31,8 @@
               <td>{{ reservation.movieTitle}}</td>
               <td>{{ reservation.startDate }}</td>
               <td>{{ reservation.endDate }}</td>
+              <td><button class="btn btn-primary" @click="editReservation(reservation.id)">Edit</button></td>
+              <td><button class="btn btn-danger" @click="cancellReservation(reservation.id)">Cancell</button></td>
             </tr>
           </tbody>
         </table>
@@ -68,6 +70,18 @@ export default {
         .catch(error => {
           console.error('Error fetching movies:', error);
         });
+    },
+    editReservation(id){
+      axios.delete(`${process.env.VUE_APP_BACKEND_URL_RESERVATIONS}/delete/${id}`)
+        .then(() => {
+          this.getReservations();
+        })
+    },
+    cancellReservation(id){
+      axios.delete(`${process.env.VUE_APP_BACKEND_URL_RESERVATIONS}/delete/${id}`)
+        .then(() => {
+          this.getReservations();
+        })
     }
   }
 };

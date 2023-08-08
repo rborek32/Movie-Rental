@@ -17,7 +17,7 @@ namespace ReservationService.Controllers
             _reservationRepository = new ReservationRepository(connectionString, "Movie", "Reservations");
         }
 
-        [HttpGet("/")]
+        [HttpGet]
         public IActionResult GetAllReservations()
         {
             var reservations = _reservationRepository.GetAllReservations();
@@ -37,20 +37,20 @@ namespace ReservationService.Controllers
             try
             {
                 await _reservationRepository.AddReservation<Reservation>(reservation);
-                return Ok("Movie inserted successfully.");
+                return Ok("Reservation inserted successfully.");
             }
             catch (Exception ex)
             {
-                return BadRequest($"Failed to insert movie. Error: {ex.Message}");
+                return BadRequest($"Failed to Reservation movie. Error: {ex.Message}");
             }
         }
 
-        [HttpDelete("/delete/{movieTitle}")]
-        public IActionResult DeleteReservation(string movieTitle)
+        [HttpDelete("/delete/{Id}")]
+        public IActionResult DeleteReservation(int Id)
         {
             try
             {
-                var reservation = _reservationRepository.GetReservationByTitle(movieTitle);
+                var reservation = _reservationRepository.GetReservationById(Id);
                 if (reservation == null)
                 {
                     return NotFound("Reservation not found.");
