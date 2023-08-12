@@ -144,7 +144,7 @@ main {
 }
 
 .form-container {
-  max-width: 175px;
+  max-width: 200px;
   padding: 10px;
   background-color: white;
 }
@@ -170,4 +170,25 @@ main {
   border: 1px solid #ccc;
   padding: 10px;
   z-index: 1;
+}
+
+
+
+.reservationPanel {
+  display: flex;
+  justify-content: center; /* Horizontally center the content */
+  height: 100vh; /* Set the container to 100% of the viewport height */
+  margin: 10%;
+}
+
+.reservationPanelImgContainer {
+  flex: 0 0 25%; /* Set the image container to 25% of the available space */
+  padding: 20px; /* Add some spacing around the image */
+}
+
+.reservationDetails {
+max-width: fit-content;
+  padding: 20px; /* Add spacing around the details */
+  display: flex;
+  flex-direction: column;
 }

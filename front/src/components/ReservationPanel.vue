@@ -10,27 +10,33 @@
     </nav>
   </header>
 
-  
+
   <body>
-    <aside>
-    <img src="@/assets/movie.jpg" class="img-thumbnail" alt="Cinque Terre">
-    <h2>Reservation Details</h2>
-      
-    <p><strong>Movie ID:</strong> {{ movieId }}</p>
-    <p><strong>Title:</strong> {{ title }}</p>
-    <p><strong>Category:</strong> {{ movieCategory }}</p>
-    <p><strong>Rating:</strong> {{ rating }}</p>
-    <p><strong>Release Date:</strong> {{ releaseDate }}</p>
-  </aside>
-    <form class="form-container" onsubmit="return false;">
-      <label for="date"><b>Start Date</b></label>
-      <input type="date" placeholder="Start..." v-model="startDate" required>
+    <div class="reservationPanel">
+    <div class="reservationPanelImgContainer">
+      <img src="@/assets/movie.jpg" class="img-thumbnail" alt="Cinque Terre">
+    </div>
 
-      <label for="date"><b>End date</b></label>
-      <input type="date" placeholder="End..." v-model="endDate" required>
+    <aside class="reservationDetails">
+              <h2>Reservation Details</h2>
 
-      <button class="btn btn-primary btn-sm" @click="addReservation()">Reserve!</button>
-    </form>
+        <p><strong>Movie ID:</strong> {{ movieId }}</p>
+        <p><strong>Title:</strong> {{ title }}</p>
+        <p><strong>Category:</strong> {{ movieCategory }}</p>
+        <p><strong>Rating:</strong> {{ rating }}</p>
+        <p><strong>Release Date:</strong> {{ releaseDate }}</p>
+      </aside>
+
+      <form class="form-container" onsubmit="return false;">
+        <label for="date"><b>Start Date</b></label>
+        <input type="date" placeholder="Start..." v-model="startDate" required>
+
+        <label for="date"><b>End date</b></label>
+        <input type="date" placeholder="End..." v-model="endDate" required>
+
+        <button class="btn btn-primary btn-sm" @click="addReservation()">Reserve!</button>
+      </form>
+      </div>
   </body>
 </template>
   
@@ -61,7 +67,7 @@ export default {
       vm.releaseDate = to.query.releaseDate;
     });
   },
-  methods:{
+  methods: {
     addReservation() {
       var today = new Date();
       var dd = String(today.getDate()).padStart(2, '0');
@@ -77,7 +83,7 @@ export default {
         movieTitle: this.title
       };
 
-      if (this.startDate != null && this.endDate != null) {
+      if (this.startDate != null && this.endDate != null && this.startDate != "" && this.endDate != "") {
         axios.post(`${process.env.VUE_APP_BACKEND_URL_RESERVATIONS}/api/reservations`, reservationBody).then((response) => {
           console.log(`${process.env.VUE_APP_BACKEND_URL_RESERVATIONS}/api/reservations`
             + "\nMovie added successfully:", response.data);
