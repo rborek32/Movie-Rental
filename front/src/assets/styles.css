@@ -1,107 +1,173 @@
 * {
-    margin: 0;
-    box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
-  }
-  
-  body {
-    display: flex;
-    margin: 0;
-  }
-  
-  .header {
-    position: relative;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 20px;
-    background: rgb(28, 34, 34);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  
-  .title {
-    left: 10%;
-    font-size: 32px;
-    color: #fff;
-    text-decoration: none;
-    font-weight: 700;
-  }
-  
-  .navbar {
-    display: flex;
-    align-items: center;
-    right: 5%;
-  }
-  
-  .navbar a {
-    position: relative;
-    font-size: 18px;
-    color: #fff;
-    font-weight: 500;
-    text-decoration: none;
-    margin-left: 40px;
-  }
-  
-  .navbar a::before {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 0;
-    height: 1px;
-    background: #fff;
-    transition: 0.3s;
-  }
-  
-  .navbar a:hover::before {
-    width: 100%
-  }
-  
-  .filter-panel {
-    background-color: #FFEFD5;
-    border-right: 1px solid #ccc; 
-  }
-  
-  .filter-content {
-    border: 1px solid #ccc; 
-    padding: 15px;
-  }
-  
-  .filter-content h2 {
-    font-size: 20px;
-    margin-bottom: 10px;
-  }
-  
-  .filter-input,
-  .filter-select {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #F5DEB3;
-    border-radius: 4px;
-  }
-  
-  .table-responsive{
-   flex: 1;
-   margin-left: auto;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  display: flex;
+  margin: 0;
+}
+
+aside{
+  height: 100%;
+}
+.header {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px;
+  background: rgb(28, 34, 34);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.title {
+  left: 10%;
+  font-size: 32px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  right: 5%;
+}
+
+.navbar a {
+  position: relative;
+  font-size: 18px;
+  color: #fff;
+  font-weight: 500;
+  text-decoration: none;
+  margin-left: 40px;
+}
+
+.navbar a::before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: #fff;
+  transition: 0.3s;
+}
+
+.navbar a:hover::before {
+  width: 100%
+}
+
+.filter-panel {
+  width: 100%;
+  background-color: #FFFF;
+  border-radius: 25px;
+  border: 1px solid black;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+  margin: 3%;
+}
+
+.filter-content {
+  padding: 15px;
+}
+
+.filter-content h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.filter-input,
+.filter-select {
+  width: 40%;
+  padding: 8px;
+  margin: 10px;
+  border: 1px solid #F5DEB3;
+  border-radius: 4px;
+}
+
+.filter-input-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.filter-input-container input{
+  max-width: 30%;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.filter-input-date{
+  width: 35%;
+  padding: 8px;
+  border: 1px solid #F5DEB3;
+  border-radius: 4px;
+  margin: 10px;
+}
+
+.table-responsive {
+  flex: 1;
+  margin-left: auto;
   margin-right: auto;
-  }
-  
-  #app{
-    width: 100%;
-  }
+}
 
-  main{
-    width:100%;
-    padding-left: 5%;
-    padding-rigHt: 5%;
-    padding-top: 1%;
-  }
+#app {
+  width: 100%;
+}
 
-  .movie-editor{
-    padding-left: 5%;
-    padding-top: 5%;
-  }
+main {
+  width: 100%;
+  padding-left: 5%;
+  padding-rigHt: 5%;
+  padding-top: 1%;
+}
+
+.movie-editor {
+  padding-left: 5%;
+  padding-top: 5%;
+}
+
+.form-popup {
+  display: none;
+  position: fixed;
+  border: 3px solid black;
+  border-radius: 8px;
+  z-index: 9;
+}
+
+.form-container {
+  max-width: 175px;
+  padding: 10px;
+  background-color: white;
+}
+
+.form-container input {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+  border-radius: 25px;
+}
+
+.form-container button {
+  margin: 10px;
+}
+
+
+.form-popup {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  padding: 10px;
+  z-index: 1;
+}

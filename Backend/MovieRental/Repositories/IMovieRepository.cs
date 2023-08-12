@@ -12,6 +12,8 @@ namespace MovieRental.Repositories
         List<Movie> GetMoviesByCategory(string category);
         List<Movie> GetMoviesFromYear(int fromYear);
         List<Movie> GetMoviesToYear(int toYear);
-        List<Movie> GetMoviesWithRating(decimal minRating, decimal maxRating);
+        List<Movie> GetMoviesWithRating(decimal? minRating, decimal? maxRating);
+        List<Movie> GetMoviesWithStringInTitle(string title);
+        List<Movie> GetMoviesBetweenYears(int? startYear, int? endYear);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using MovieRental.Models;
 using MovieRental.Repositories;
@@ -25,28 +26,34 @@ namespace MovieRental.Controllers
         }
 
         [HttpGet("{category}")]
-        public IActionResult GetMovieByCategory(string category) 
+        public IActionResult GetMovieByCategory(string category)
         {
             var movies = _movieRepository.GetMoviesByCategory(category);
             return Ok(movies);
         }
 
-
-        [HttpGet("/fromYear/{year}")]
-        public IActionResult GetMoviesFromYear(int year)
+        [HttpGet("getMoviesBetweenYears")]
+        public IActionResult GetMoviesBetweenYears([FromQuery] int? startYear, int? endYear)
         {
-            var movies = _movieRepository.GetMoviesFromYear(year);
+            var movies = _movieRepository.GetMoviesBetweenYears(startYear, endYear);
+            return Ok(movies);
+        }
+        
+        [HttpGet("getMoviesWithRating")]
+        public IActionResult GetMoviesWithRating([FromQuery] decimal? minRating, decimal? maxRating)
+        {
+            var movies = _movieRepository.GetMoviesWithRating(minRating, maxRating);
             return Ok(movies);
         }
 
-        [HttpGet("/toYear/{year}")]
-        public IActionResult GetMoviesToYear(int year)
+        [HttpGet("titleContains")]
+        public IActionResult GetMoviesThatContainRegexInTitle([FromQuery] string title)
         {
-            var movies = _movieRepository.GetMoviesToYear(year);
+            var movies = _movieRepository.GetMoviesWithStringInTitle(title);
             return Ok(movies);
         }
 
-        [HttpPost]
+        [HttpPost("addMovie")]
         public async Task<IActionResult> PostMovie([FromBody] Movie movie)
         {
             try
@@ -60,7 +67,7 @@ namespace MovieRental.Controllers
             }
         }
 
-        [HttpPut]
+        [HttpPut("updateMovie")]
         public async Task<IActionResult> PutMovie([FromBody] Movie movie)
         {
             try

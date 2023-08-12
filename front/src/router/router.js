@@ -8,7 +8,12 @@ const router = createRouter({
   routes: [
     { path: '/', component: MainPage },
     { path: '/admin-panel', component: AdminPanel },
-    { path: '/reservations', component: ReservationPanel },
+    {
+      path: '/reservations',
+      component: ReservationPanel,
+      name: 'reservations',
+      props: true
+    }
   ]
 });
 

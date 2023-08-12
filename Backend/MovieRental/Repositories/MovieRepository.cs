@@ -45,12 +45,50 @@ namespace MovieRental.Repositories
             return _collection.Find(filter).ToList();
         }
 
-        public List<Movie> GetMoviesWithRating(decimal minRating, decimal maxRating)
+        public List<Movie> GetMoviesWithRating(decimal? minRating, decimal? maxRating)
         {
-            var filter = Builders<Movie>.Filter.And(
-                Builders<Movie>.Filter.Lte(h => h.Rating, maxRating),
-                Builders<Movie>.Filter.Gte(h => h.Rating, minRating)
-            );
+            // var filter = Builders<Movie>.Filter.And(
+            //     Builders<Movie>.Filter.Lte(h => h.Rating, maxRating),
+            //     Builders<Movie>.Filter.Gte(h => h.Rating, minRating)
+            // );
+            
+            var filterBuilder = Builders<Movie>.Filter;
+            var filter = Builders<Movie>.Filter.Empty;
+
+            if (minRating.HasValue)
+            {
+                filter &= filterBuilder.Gte(h => h.Rating, minRating);
+            }
+
+            if (maxRating.HasValue)
+            {
+                filter &= filterBuilder.Lte(h => h.Rating, maxRating);
+            }
+
+            return _collection.Find(filter).ToList();
+        }
+
+        public List<Movie> GetMoviesWithStringInTitle(string title)
+        {
+            var filter = Builders<Movie>.Filter.Regex(h => h.Title, title);
+            return _collection.Find(filter).ToList();
+        }
+
+        public List<Movie> GetMoviesBetweenYears(int? startYear, int? endYear)
+        {
+            var filterBuilder = Builders<Movie>.Filter;
+            var filter = Builders<Movie>.Filter.Empty;
+
+            if (startYear.HasValue)
+            {
+                filter &= filterBuilder.Gte(h => h.ReleaseDate, startYear.Value);
+            }
+
+            if (endYear.HasValue)
+            {
+                filter &= filterBuilder.Lte(h => h.ReleaseDate, endYear.Value);
+            }
+
             return _collection.Find(filter).ToList();
         }
 

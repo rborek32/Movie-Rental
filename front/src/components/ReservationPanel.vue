@@ -4,40 +4,33 @@
     <nav class="navbar">
       <ul class="nav_buttons">
         <router-link to="/">Home</router-link>
-        <router-link to="/reservations">Reservations</router-link>
         <a href="#">Contact</a>
         <router-link to="/admin-panel">Admin</router-link>
       </ul>
     </nav>
   </header>
 
-
+  
   <body>
-    <main>
-      <div class="table-responsive">
-        <h2>Reservations</h2>
-        <table class="table table-striped table-hover">
-          <thead class="thead-dark">
-            <tr>
-              <th>Id</th>
-              <th>Title</th>
-              <th>Start Date</th>
-              <th>End Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="reservation in reservations" :key="reservation.id">
-              <td>{{ reservation.id }}</td>
-              <td>{{ reservation.movieTitle}}</td>
-              <td>{{ reservation.startDate }}</td>
-              <td>{{ reservation.endDate }}</td>
-              <td><button class="btn btn-primary" @click="editReservation(reservation.id)">Edit</button></td>
-              <td><button class="btn btn-danger" @click="cancellReservation(reservation.id)">Cancell</button></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </main>
+    <aside>
+    <img src="@/assets/movie.jpg" class="img-thumbnail" alt="Cinque Terre">
+    <h2>Reservation Details</h2>
+      
+    <p><strong>Movie ID:</strong> {{ movieId }}</p>
+    <p><strong>Title:</strong> {{ title }}</p>
+    <p><strong>Category:</strong> {{ movieCategory }}</p>
+    <p><strong>Rating:</strong> {{ rating }}</p>
+    <p><strong>Release Date:</strong> {{ releaseDate }}</p>
+  </aside>
+    <form class="form-container" onsubmit="return false;">
+      <label for="date"><b>Start Date</b></label>
+      <input type="date" placeholder="Start..." v-model="startDate" required>
+
+      <label for="date"><b>End date</b></label>
+      <input type="date" placeholder="End..." v-model="endDate" required>
+
+      <button class="btn btn-primary btn-sm" @click="addReservation()">Reserve!</button>
+    </form>
   </body>
 </template>
   
@@ -47,41 +40,52 @@
 
 <script>
 import axios from 'axios';
-
 export default {
   data() {
     return {
-      reservations: [],
-      id: null,
-      movieTitle: "",
       startDate: "",
-      endDate: ""
+      endDate: "",
+      movieId: null,
+      title: null,
+      movieCategory: null,
+      rating: null,
+      releaseDate: null
     };
   },
-  created() {
-    this.getReservations();
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      vm.movieId = to.query.movieId;
+      vm.title = to.query.title;
+      vm.movieCategory = to.query.movieCategory;
+      vm.rating = to.query.rating;
+      vm.releaseDate = to.query.releaseDate;
+    });
   },
-  methods: {
-    getReservations() {
-      axios.get(`${process.env.VUE_APP_BACKEND_URL_RESERVATIONS}/api/reservations`)
-        .then(response => {
-          this.reservations = response.data;
+  methods:{
+    addReservation() {
+      var today = new Date();
+      var dd = String(today.getDate()).padStart(2, '0');
+      var mm = String(today.getMonth() + 1).padStart(2, '0');
+      var yyyy = today.getFullYear();
+
+      today = yyyy + '-' + dd + '-' + mm;
+
+      const reservationBody = {
+        id: this.movieId,
+        startDate: this.startDate,
+        endDate: this.endDate,
+        movieTitle: this.title
+      };
+
+      if (this.startDate != null && this.endDate != null) {
+        axios.post(`${process.env.VUE_APP_BACKEND_URL_RESERVATIONS}/api/reservations`, reservationBody).then((response) => {
+          console.log(`${process.env.VUE_APP_BACKEND_URL_RESERVATIONS}/api/reservations`
+            + "\nMovie added successfully:", response.data);
         })
-        .catch(error => {
-          console.error('Error fetching movies:', error);
-        });
-    },
-    editReservation(id){
-      axios.delete(`${process.env.VUE_APP_BACKEND_URL_RESERVATIONS}/delete/${id}`)
-        .then(() => {
-          this.getReservations();
-        })
-    },
-    cancellReservation(id){
-      axios.delete(`${process.env.VUE_APP_BACKEND_URL_RESERVATIONS}/delete/${id}`)
-        .then(() => {
-          this.getReservations();
-        })
+      }
+      else {
+        console.log("Startdate or enddate is empty!");
+      }
     }
   }
 };
