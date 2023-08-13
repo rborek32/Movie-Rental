@@ -10,7 +10,7 @@
     </nav>
   </header>
 
-  <body>
+  <body style="display: flex">
     <aside>
       <div class="movie-editor">
         <h2>Add, Update, or Delete Movies</h2>

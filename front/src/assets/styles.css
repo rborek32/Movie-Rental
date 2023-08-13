@@ -108,13 +108,13 @@ aside{
 .filter-input-date{
   width: 35%;
   padding: 8px;
-  border: 1px solid #F5DEB3;
+  border: 1px solid lightblue;
   border-radius: 4px;
   margin: 10px;
 }
 
 .table-responsive {
-  flex: 1;
+  width: auto;
   margin-left: auto;
   margin-right: auto;
 }
@@ -172,7 +172,6 @@ main {
   width: 100%;
 }
 
-/* Center the reservation panel contents */
 .reservationPanel {
   display: flex;
   justify-content: center;
@@ -190,26 +189,4 @@ main {
   padding: 20px;
   display: flex;
   flex-direction: column;
-}
-
-#toastBox {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  display: flex;
-  align-items: flex-end;
-  flex-direction: column;
-  overflow: hidden;
-  padding: 20px;
-  border: 1px solid black;
-  background-color: rgba(255, 255, 255, 0.9);
-  /* You can adjust other styles as needed */
-}
-
-.toast {
-  margin-top: 10px;
-  padding: 10px;
-  background-color: aquamarine;
-  border: 1px solid black;
-  text-align: center;
 }

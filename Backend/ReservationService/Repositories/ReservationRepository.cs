@@ -35,24 +35,24 @@ namespace ReservationService.Repositories
             await _collection.DeleteOneAsync(filter);
         }
 
-        public async Task<long> GetAmountOfReservations(string Title)
+        public async Task<long> GetAmountOfReservations(string title)
         {
-            var filter = Builders<Reservation>.Filter.Eq(h=>h.MovieTitle, Title);
+            var filter = Builders<Reservation>.Filter.Eq(h=>h.MovieTitle, title);
             return await _collection.CountDocumentsAsync(filter);
         }
-        
+
         public Reservation GetReservationById(int id)
         {
             var filter = Builders<Reservation>.Filter.Eq(h => h.Id, id);
             return _collection.Find(filter).FirstOrDefault();
         }
 
-        public Reservation GetReservationByTitle(string Title)
+        public List<Reservation> GetReservationsByTitle(string title)
         {
-            var filter = Builders<Reservation>.Filter.Eq(h => h.MovieTitle, Title);
-            return _collection.Find(filter).FirstOrDefault();
+            var filter = Builders<Reservation>.Filter.Eq(r => r.MovieTitle, title);
+            return _collection.Find(filter).ToList();
         }
-
+        
         public async Task<long> GetCountOfReservations()
         {
             var filter = Builders<Reservation>.Filter.Empty;

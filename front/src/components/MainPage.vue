@@ -55,8 +55,8 @@
             <tr>
               <th scope="col" @click="sortBy('movieId')" :class="{ 'active-column': sortByColumn === 'movieId' }">Id</th>
               <th scope="col" @click="sortBy('title')" :class="{ 'active-column': sortByColumn === 'title' }">Title</th>
-              <th scope="col" @click="sortBy('movieCategory')"
-                :class="{ 'active-column': sortByColumn === 'movieCategory' }">Category</th>
+              <th scope="col" @click="sortBy('movieCategory')" :class="{ 'active-column': sortByColumn === 'movieCategory' }">Category</th>
+              <th scope="col" @click="sortBy('rating')" :class="{ 'active-column': sortByColumn === 'rating' }">Rating</th>
               <th scope="col" @click="sortBy('releaseDate')" :class="{ 'active-column': sortByColumn === 'releaseDate' }">
                 Release Date</th>
             </tr>

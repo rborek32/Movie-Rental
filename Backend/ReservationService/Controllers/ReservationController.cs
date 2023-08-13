@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using ReservationService.Models;
 using ReservationService.Repositories;
@@ -24,14 +25,21 @@ namespace ReservationService.Controllers
             return Ok(reservations);
         }
 
-        [HttpGet("/amount/movieTitle")]
+        [HttpGet("/amountOf/movieTitle")]
         public async Task<ActionResult<long>> GetAmountOfReservations(string title)
         {
             long count = await _reservationRepository.GetAmountOfReservations(title);
             return count;
         }
 
-        [HttpPost]
+        [HttpGet("movie")]
+        public IActionResult GetAllReservedMovies(string title)
+        {
+            var reservations = _reservationRepository.GetReservationsByTitle(title);
+            return Ok(reservations);
+        }
+
+        [HttpPost("add")]
         public async Task<IActionResult> PostMovie([FromBody] Reservation reservation)
         {
             try
@@ -65,7 +73,7 @@ namespace ReservationService.Controllers
             }
         }
 
-        [HttpDelete("/delete/many/{movieTitle}")]
+        [HttpDelete("/deleteMany/{movieTitle}")]
         public IActionResult DeleteReservationsByTitle(string movieTitle)
         {
             try
@@ -85,7 +93,7 @@ namespace ReservationService.Controllers
             }
         }
         
-        [HttpPost("check-reservation")]
+        [HttpPost("isReserved")]
         public async Task<IActionResult> CheckReservation([FromBody] Reservation request)
         {
             try

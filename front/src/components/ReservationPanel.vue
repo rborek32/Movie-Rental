@@ -22,7 +22,6 @@
       </div>
 
       <aside class="reservationDetails">
-
         <p><strong>Movie ID:</strong> {{ movieId }}</p>
         <p><strong>Title:</strong> {{ title }}</p>
         <p><strong>Category:</strong> {{ movieCategory }}</p>
@@ -39,13 +38,30 @@
 
         <button class="btn btn-primary btn-sm" @click="addReservation()">Reserve!</button>
       </form>
-  </div>
+    </div>
 
+    <div class="reservedMovies">
+      <div class="table-responsive">
+        <h2>Reservations</h2>
+        <table class="table table-striped table-hover">
+          <thead class="thead-dark">
+            <tr>
+              <th>Title</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="reservation in reservations" :key="reservation.id">
+              <td>{{ reservation.movieTitle }}</td>
+              <td>{{ formatDate(reservation.StartDate) }}</td>
+              <td>{{ formatDate(reservation.EndDate) }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </body>
-  <dialog id="popupDialog">
-    <p id="popupMessage">{{ popupMessage }}</p>
-    <button @click="closePopup">Close</button>
-  </dialog>
 </template>
   
 <style>
@@ -54,18 +70,25 @@
 
 <script>
 import axios from 'axios';
+import { useToast } from "vue-toastification";
+import moment from 'moment';
 
 export default {
+  setup() {
+    const toast = useToast();
+    return { toast }
+  },
   data() {
     return {
       startDate: "",
       endDate: "",
       movieId: null,
-      title: null,
+      title: "",
       movieCategory: null,
       rating: null,
       releaseDate: null,
       popupMessage: '',
+      reservations: []
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -75,17 +98,22 @@ export default {
       vm.movieCategory = to.query.movieCategory;
       vm.rating = to.query.rating;
       vm.releaseDate = to.query.releaseDate;
+
+      vm.getReservations();
     });
   },
   methods: {
+    getReservations() {
+      axios.get(`${process.env.VUE_APP_BACKEND_URL_RESERVATIONS}/api/reservations/movie`,
+        { params: { title: this.title } })
+        .then((response) => {
+          this.reservations = response.data;
+        })
+        .catch(error => {
+          console.error('Error fetching reservations:', error);
+        });
+    },
     async addReservation() {
-      var today = new Date();
-      var dd = String(today.getDate()).padStart(2, '0');
-      var mm = String(today.getMonth() + 1).padStart(2, '0');
-      var yyyy = today.getFullYear();
-
-      today = yyyy + '-' + dd + '-' + mm;
-
       const reservationBody = {
         id: this.movieId,
         startDate: this.startDate,
@@ -95,27 +123,25 @@ export default {
 
       if (this.startDate != null && this.endDate != null && this.startDate != "" && this.endDate != "") {
         try {
-          const isReservedResponse = await axios.post(`${process.env.VUE_APP_BACKEND_URL_RESERVATIONS}/api/reservations/check-reservation`, reservationBody);
+          const isReservedResponse = await axios.post(`${process.env.VUE_APP_BACKEND_URL_RESERVATIONS}/api/reservations/isReserved`, reservationBody);
 
-          if (isReservedResponse.data) {
-            this.popupMessage = 'This movie is already reserved.';
-            document.getElementById('popupDialog').showModal();
+          if (isReservedResponse.data != "Movie can be reserved.") {
+            this.toast.error("The movie is already reserved!");
           } else {
-            const reservationResponse = await axios.post(`${process.env.VUE_APP_BACKEND_URL_RESERVATIONS}/api/reservations`, reservationBody);
+            const reservationResponse = await axios.post(`${process.env.VUE_APP_BACKEND_URL_RESERVATIONS}/api/reservations/add`, reservationBody);
             console.log('Movie added successfully:', reservationResponse.data);
+            this.toast.success("Success!");
           }
-
         } catch (error) {
           console.error('Error checking reservation:', error);
         }
-
       } else {
         console.log('Start date or end date is empty!');
       }
+      this.getReservations();
     },
-    closePopup() {
-      document.getElementById('popupDialog').close();
-      this.popupMessage = '';
+    formatDate(date) {
+      return moment(date).format('DD-MM-YYYY');
     }
   }
 };
