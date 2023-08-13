@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson;
+﻿using System.Collections.Immutable;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using ReservationService.Models;
 
@@ -63,6 +64,26 @@ namespace ReservationService.Repositories
             var filter = Builders<Reservation>.Filter.Eq(r => r.MovieTitle, movieTitle);
             var result = _collection.DeleteMany(filter);
             return result.DeletedCount;
+        }
+
+        public async Task<bool> CheckReservation(Reservation reservation)
+        {
+            var filter = Builders<Reservation>.Filter.And(
+                Builders<Reservation>.Filter.Eq(r => r.MovieTitle, reservation.MovieTitle),
+                Builders<Reservation>.Filter.Or(
+                    Builders<Reservation>.Filter.And(
+                        Builders<Reservation>.Filter.Lte(r => r.StartDate, reservation.EndDate),
+                        Builders<Reservation>.Filter.Gte(r => r.EndDate, reservation.StartDate)
+                    ),
+                    Builders<Reservation>.Filter.And(
+                        Builders<Reservation>.Filter.Gte(r => r.StartDate, reservation.StartDate),
+                        Builders<Reservation>.Filter.Lte(r => r.StartDate, reservation.EndDate)
+                    )
+                )
+            );
+            var existingReservation = await _collection.Find(filter).FirstOrDefaultAsync();
+
+            return existingReservation != null;
         }
     }
 }

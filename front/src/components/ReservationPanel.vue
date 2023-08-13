@@ -10,15 +10,18 @@
     </nav>
   </header>
 
-
   <body>
-    <div class="reservationPanel">
-    <div class="reservationPanelImgContainer">
-      <img src="@/assets/movie.jpg" class="img-thumbnail" alt="Cinque Terre">
+    <div class="reservationHeader">
+      <h2>Reservation Details</h2>
     </div>
 
-    <aside class="reservationDetails">
-              <h2>Reservation Details</h2>
+    <div class="reservationPanel">
+
+      <div class="reservationPanelImgContainer">
+        <img src="@/assets/movie.jpg" class="img-thumbnail" alt="Cinque Terre">
+      </div>
+
+      <aside class="reservationDetails">
 
         <p><strong>Movie ID:</strong> {{ movieId }}</p>
         <p><strong>Title:</strong> {{ title }}</p>
@@ -36,8 +39,13 @@
 
         <button class="btn btn-primary btn-sm" @click="addReservation()">Reserve!</button>
       </form>
-      </div>
+  </div>
+
   </body>
+  <dialog id="popupDialog">
+    <p id="popupMessage">{{ popupMessage }}</p>
+    <button @click="closePopup">Close</button>
+  </dialog>
 </template>
   
 <style>
@@ -46,6 +54,7 @@
 
 <script>
 import axios from 'axios';
+
 export default {
   data() {
     return {
@@ -55,7 +64,8 @@ export default {
       title: null,
       movieCategory: null,
       rating: null,
-      releaseDate: null
+      releaseDate: null,
+      popupMessage: '',
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -68,7 +78,7 @@ export default {
     });
   },
   methods: {
-    addReservation() {
+    async addReservation() {
       var today = new Date();
       var dd = String(today.getDate()).padStart(2, '0');
       var mm = String(today.getMonth() + 1).padStart(2, '0');
@@ -84,14 +94,28 @@ export default {
       };
 
       if (this.startDate != null && this.endDate != null && this.startDate != "" && this.endDate != "") {
-        axios.post(`${process.env.VUE_APP_BACKEND_URL_RESERVATIONS}/api/reservations`, reservationBody).then((response) => {
-          console.log(`${process.env.VUE_APP_BACKEND_URL_RESERVATIONS}/api/reservations`
-            + "\nMovie added successfully:", response.data);
-        })
+        try {
+          const isReservedResponse = await axios.post(`${process.env.VUE_APP_BACKEND_URL_RESERVATIONS}/api/reservations/check-reservation`, reservationBody);
+
+          if (isReservedResponse.data) {
+            this.popupMessage = 'This movie is already reserved.';
+            document.getElementById('popupDialog').showModal();
+          } else {
+            const reservationResponse = await axios.post(`${process.env.VUE_APP_BACKEND_URL_RESERVATIONS}/api/reservations`, reservationBody);
+            console.log('Movie added successfully:', reservationResponse.data);
+          }
+
+        } catch (error) {
+          console.error('Error checking reservation:', error);
+        }
+
+      } else {
+        console.log('Start date or end date is empty!');
       }
-      else {
-        console.log("Startdate or enddate is empty!");
-      }
+    },
+    closePopup() {
+      document.getElementById('popupDialog').close();
+      this.popupMessage = '';
     }
   }
 };

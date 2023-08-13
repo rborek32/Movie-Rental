@@ -84,5 +84,27 @@ namespace ReservationService.Controllers
                 return BadRequest($"Failed to delete reservations. Error: {ex.Message}");
             }
         }
+        
+        [HttpPost("check-reservation")]
+        public async Task<IActionResult> CheckReservation([FromBody] Reservation request)
+        {
+            try
+            {
+                bool isReserved = await _reservationRepository.CheckReservation(request);
+                
+                if (isReserved)
+                {
+                    return Ok("Movie cannot be reserved.");
+                }
+                else
+                {
+                    return Ok("Movie can be reserved.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Failed to check reservation. Error: {ex.Message}");
+            }
+        }
     }
 }

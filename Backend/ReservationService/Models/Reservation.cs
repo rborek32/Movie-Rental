@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices.JavaScript;
-
-namespace ReservationService.Models
+﻿namespace ReservationService.Models
 {
     public class Reservation
     {

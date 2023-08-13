@@ -4,7 +4,7 @@
   font-family: "Poppins", sans-serif;
 }
 
-body {
+.mainBody {
   display: flex;
   margin: 0;
 }
@@ -135,14 +135,6 @@ main {
   padding-top: 5%;
 }
 
-.form-popup {
-  display: none;
-  position: fixed;
-  border: 3px solid black;
-  border-radius: 8px;
-  z-index: 9;
-}
-
 .form-container {
   max-width: 200px;
   padding: 10px;
@@ -162,9 +154,8 @@ main {
   margin: 10px;
 }
 
-
 .form-popup {
-  display: none;
+  /* display: none; */
   position: absolute;
   background-color: #f9f9f9;
   border: 1px solid #ccc;
@@ -172,23 +163,53 @@ main {
   z-index: 1;
 }
 
+.reservationHeader {
+  margin-top: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10%;
+  width: 100%;
+}
 
-
+/* Center the reservation panel contents */
 .reservationPanel {
   display: flex;
-  justify-content: center; /* Horizontally center the content */
-  height: 100vh; /* Set the container to 100% of the viewport height */
-  margin: 10%;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
 .reservationPanelImgContainer {
-  flex: 0 0 25%; /* Set the image container to 25% of the available space */
-  padding: 20px; /* Add some spacing around the image */
+  flex: 0 0 25%;
+  padding: 20px;
 }
 
 .reservationDetails {
-max-width: fit-content;
-  padding: 20px; /* Add spacing around the details */
+  max-width: fit-content;
+  padding: 20px;
   display: flex;
   flex-direction: column;
+}
+
+#toastBox {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 20px;
+  border: 1px solid black;
+  background-color: rgba(255, 255, 255, 0.9);
+  /* You can adjust other styles as needed */
+}
+
+.toast {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: aquamarine;
+  border: 1px solid black;
+  text-align: center;
 }

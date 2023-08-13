@@ -10,7 +10,7 @@
     </nav>
   </header>
 
-  <body class="body">
+  <body class="mainBody">
     <aside>
       <div class="filter-panel filter-content">
         <h2>Filter Movies</h2>

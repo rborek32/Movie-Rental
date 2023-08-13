@@ -12,5 +12,6 @@ namespace ReservationService.Repositories
         Reservation GetReservationByTitle(string Title);
         Task<long> GetCountOfReservations();
         long RemoveReservationsByTitle(string movieTitle);
+        Task<bool> CheckReservation(Reservation reservation);
     }
 }
