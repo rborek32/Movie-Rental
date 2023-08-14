@@ -160,7 +160,7 @@ export default {
         movieTitle: this.editedReservation.movieTitle
       }
 
-      axios.put(`${process.env.VUE_APP_BACKEND_URL_RESERVATIONS}/api/reservations/updateMovie`, updatedReservationBody)
+      axios.put(`${process.env.VUE_APP_BACKEND_URL_RESERVATIONS}/api/reservations/updateReservation`, updatedReservationBody)
         .then(() => {
           this.getReservations();
         })

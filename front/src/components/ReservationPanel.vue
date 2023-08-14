@@ -41,7 +41,7 @@
     </div>
 
     <div class="reservedMovies">
-      <div class="table-responsive">
+      <div class="table-responsive" style="width: 65%">
         <h2>Reservations</h2>
         <table class="table table-striped table-hover">
           <thead class="thead-dark">
@@ -54,8 +54,8 @@
           <tbody>
             <tr v-for="reservation in reservations" :key="reservation.id">
               <td>{{ reservation.movieTitle }}</td>
-              <td>{{ formatDate(reservation.StartDate) }}</td>
-              <td>{{ formatDate(reservation.EndDate) }}</td>
+              <td>{{ formatDate(reservation.startDate)}}</td>
+              <td>{{ formatDate(reservation.endDate) }}</td>
             </tr>
           </tbody>
         </table>
