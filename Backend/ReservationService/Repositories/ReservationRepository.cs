@@ -85,5 +85,11 @@ namespace ReservationService.Repositories
 
             return existingReservation != null;
         }
+        
+        public async Task UpdateReservation<T>(Reservation reservation)
+        {
+            var filter = Builders<Reservation>.Filter.Eq(h => h.Id, reservation.Id);
+            _collection.ReplaceOne(filter, reservation);
+        }
     }
 }

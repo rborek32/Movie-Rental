@@ -53,8 +53,23 @@
               <td>{{ reservation.movieTitle }}</td>
               <td>{{ reservation.startDate }}</td>
               <td>{{ reservation.endDate }}</td>
-              <td><button class="btn btn-success" @click="editReservation(reservation.id)">Edit</button></td>
+              <td><button class="btn btn-success" @click="showEditForm(reservation)">Show</button></td>
               <td><button class="btn btn-danger" @click="cancellReservation(reservation.id)">Cancell</button></td>
+            </tr>
+
+            <tr v-if="editingReservation">
+              <td colspan="6">
+                <form @submit.prevent="updateReservation">
+                  <label for="startDate">Start Date:</label>
+                  <input type="date" v-model="editedReservation.startDate" id="startDate">
+
+                  <label for="endDate">End Date:</label>
+                  <input type="date" v-model="editedReservation.endDate" id="endDate">
+
+                  <button class="btn btn-success" @click="editReservation(editedReservation.id)">Edit</button>
+                  <button class="btn btn-secondary" @click="cancelEdit">Cancel</button>
+                </form>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -82,7 +97,13 @@ export default {
       id: null,
       movieTitle: "",
       startDate: "",
-      endDate: ""
+      endDate: "",
+      editingReservation: null,
+      editedReservation: {
+        id: null,
+        startDate: null,
+        endDate: null
+      }
     };
   },
   created() {
@@ -131,17 +152,40 @@ export default {
           console.error('Error fetching movies:', error);
         });
     },
-    editReservation(id){
+    editReservation() {
+      const updatedReservationBody = {
+        id: this.editedReservation.id,
+        startDate: this.editedReservation.startDate,
+        endDate: this.editedReservation.endDate,
+        movieTitle: this.editedReservation.movieTitle
+      }
+
+      axios.put(`${process.env.VUE_APP_BACKEND_URL_RESERVATIONS}/api/reservations/updateMovie`, updatedReservationBody)
+        .then(() => {
+          this.getReservations();
+        })
+        .catch(error => {
+          console.error('Error updating reservation:', error);
+        });
+    },
+    cancellReservation(id) {
       axios.delete(`${process.env.VUE_APP_BACKEND_URL_RESERVATIONS}/delete/${id}`)
         .then(() => {
           this.getReservations();
         })
     },
-    cancellReservation(id){
-      axios.delete(`${process.env.VUE_APP_BACKEND_URL_RESERVATIONS}/delete/${id}`)
-        .then(() => {
-          this.getReservations();
-        })
+    showEditForm(reservation) {
+      this.editingReservation = reservation.id;
+      this.editedReservation.id = reservation.id;
+      this.editedReservation.startDate = reservation.startDate;
+      this.editedReservation.endDate = reservation.endDate;
+      this.editedReservation.movieTitle = reservation.movieTitle;
+    },
+    cancelEdit() {
+      this.editingReservation = null;
+      this.editedReservation.id = null;
+      this.editedReservation.startDate = null;
+      this.editedReservation.endDate = null;
     }
   }
 };

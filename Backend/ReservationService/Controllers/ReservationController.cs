@@ -44,6 +44,8 @@ namespace ReservationService.Controllers
         {
             try
             {
+                reservation.StartDate = reservation.StartDate.Date;
+                
                 await _reservationRepository.AddReservation<Reservation>(reservation);
                 return Ok("Reservation inserted successfully.");
             }
@@ -52,7 +54,44 @@ namespace ReservationService.Controllers
                 return BadRequest($"Failed to Reservation movie. Error: {ex.Message}");
             }
         }
+        
+        [HttpPost("isReserved")]
+        public async Task<IActionResult> CheckReservation([FromBody] Reservation request)
+        {
+            try
+            {
+                bool isReserved = await _reservationRepository.CheckReservation(request);
+                
+                if (isReserved)
+                {
+                    return Ok("Movie cannot be reserved.");
+                }
+                else
+                {
+                    return Ok("Movie can be reserved.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Failed to check reservation. Error: {ex.Message}");
+            }
+        }
 
+        [HttpPut("updateReservation")]
+        public async Task<IActionResult> PutMovie([FromBody] Reservation reservation)
+        {
+            try
+            {
+                await _reservationRepository.UpdateReservation<Reservation>(reservation);
+                return Ok("Reservation updated successfully.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Failed to update Reservation. Error: {ex.Message}");
+            }
+        }
+        
+        
         [HttpDelete("/delete/{Id}")]
         public IActionResult DeleteReservation(int Id)
         {
@@ -90,28 +129,6 @@ namespace ReservationService.Controllers
             catch (Exception ex)
             {
                 return BadRequest($"Failed to delete reservations. Error: {ex.Message}");
-            }
-        }
-        
-        [HttpPost("isReserved")]
-        public async Task<IActionResult> CheckReservation([FromBody] Reservation request)
-        {
-            try
-            {
-                bool isReserved = await _reservationRepository.CheckReservation(request);
-                
-                if (isReserved)
-                {
-                    return Ok("Movie cannot be reserved.");
-                }
-                else
-                {
-                    return Ok("Movie can be reserved.");
-                }
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"Failed to check reservation. Error: {ex.Message}");
             }
         }
     }

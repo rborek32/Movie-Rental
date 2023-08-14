@@ -150,7 +150,11 @@ export default {
       document.getElementById(formId).style.display = 'none';
     },
     filterByTitle() {
-      axios.get(`${process.env.VUE_APP_BACKEND_URL}/api/movies/titleContains`, {
+      if(this.titleFilter == null || this.titleFilter == ""){
+        this.getMovies();
+      }
+      else{
+        axios.get(`${process.env.VUE_APP_BACKEND_URL}/api/movies/titleContains`, {
         params: { title: this.titleFilter }
       })
         .then((response) => {
@@ -159,6 +163,7 @@ export default {
         .catch((error) => {
           console.error('Error filtering movies by title:', error);
         });
+      }
     },
     filterByReleaseDates() {
       axios.get(`${process.env.VUE_APP_BACKEND_URL}/api/movies/getMoviesBetweenYears`, {
