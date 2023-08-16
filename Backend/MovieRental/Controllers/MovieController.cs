@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using MovieRental.Models;
 using MovieRental.Repositories;
+using System.IO;
+using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 
 namespace MovieRental.Controllers
 {
@@ -22,6 +25,52 @@ namespace MovieRental.Controllers
         public IActionResult GetAllMovies()
         {
             var movies = _movieRepository.GetAllMovies();
+            return Ok(movies);
+        }
+        
+        [HttpGet("test")]
+        public IActionResult Test()
+        {
+            string solutionDir = Directory.GetCurrentDirectory();
+            string filePath = Path.Combine(solutionDir, "movies.json");
+            return Ok("Movie service works" + filePath);
+        }
+        
+        [HttpGet("filterMovies")]
+        public IActionResult FilterMovies([FromQuery] string? title, string? category, decimal? minRating, decimal? maxRating, int? startYear, int? endYear)
+        {
+            var movies = _movieRepository.GetAllMovies();
+
+            if (!string.IsNullOrEmpty(title) && title != "All")
+            {
+                movies = movies.Where(movie => movie.Title == title).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(category) && category != "All")
+            {
+                movies = movies.Where(movie => movie.MovieCategory == category).ToList();
+            }
+
+            if (minRating != null)
+            {
+                movies = movies.Where(movie => movie.Rating >= minRating).ToList();
+            }
+
+            if (maxRating != null)
+            {
+                movies = movies.Where(movie => movie.Rating <= maxRating).ToList();
+            }
+
+            if (startYear != null)
+            {
+                movies = movies.Where(movie => movie.ReleaseDate >= startYear).ToList();
+            }
+            
+            if (endYear != null)
+            {
+                movies = movies.Where(movie => movie.ReleaseDate <= endYear).ToList();
+            }
+
             return Ok(movies);
         }
 
@@ -98,6 +147,36 @@ namespace MovieRental.Controllers
             catch (Exception ex)
             {
                 return BadRequest($"Failed to delete movie. Error: {ex.Message}");
+            }
+        }
+        
+        [HttpPost("initialize")]
+        public async Task<IActionResult> InitializeMovies()
+        {
+            try
+            {
+                string solutionDir = Directory.GetCurrentDirectory();
+                string filePath = Path.Combine(solutionDir, "movies.json");
+
+                if (!System.IO.File.Exists(filePath))
+                {
+                    return BadRequest("movies.json file not found.");
+                }
+
+                string jsonData = await System.IO.File.ReadAllTextAsync(filePath);
+
+                var movies = JsonConvert.DeserializeObject<List<Movie>>(jsonData);
+
+                foreach (var movie in movies)
+                {
+                    await _movieRepository.InsertMovie<Movie>(movie);
+                }
+
+                return Ok("Movies initialized successfully.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Failed to initialize movies. Error: {ex.Message}");
             }
         }
     }

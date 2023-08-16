@@ -1,0 +1,35 @@
+.filter-input-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .filter-input-container label {
+    width: 20%;
+  }
+  
+  .filter-input-container .filter-input {
+    width: 40%;
+    margin: 0 10px;
+    border: 1px solid lightblue;
+    border-radius: 4px;
+  }
+  
+  .filter-input-container .date-range-separator,
+  .filter-input-container .rating-range-separator {
+    margin: 0 5px;
+  }
+  
+  .filter-input-container .filter-select {
+    width: 30%;
+    margin: 0 10px;
+    border: 1px solid lightblue;
+    border-radius: 4px;
+  }
+  
+  .filter-input-date{
+    width: 120px;
+    border: 1px solid lightblue;
+    border-radius: 4px;
+    margin: 0 10px;
+  }

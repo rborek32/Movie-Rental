@@ -11,7 +11,11 @@
 
 aside{
   height: 100%;
+  display:flex;
+  justify-content: center;
+  align-items: center;
 }
+
 .header {
   position: relative;
   top: 0;
@@ -64,18 +68,17 @@ aside{
 }
 
 .filter-panel {
-  width: 100%;
-  background-color: #FFFF;
+  margin: 5%;
+  width:90%;
   border-radius: 25px;
   border: 1px solid black;
-  justify-content: center;
-  align-items: center;
-  height: auto;
-  margin: 3%;
 }
 
 .filter-content {
-  padding: 15px;
+  margin:5%;
+  justify-content: center;
+  align-items: center;
+  text-align: left;
 }
 
 .filter-content h2 {
@@ -88,7 +91,7 @@ aside{
   width: 40%;
   padding: 8px;
   margin: 10px;
-  border: 1px solid #F5DEB3;
+  border: 1px solid lightblue;
   border-radius: 4px;
 }
 
@@ -124,8 +127,8 @@ aside{
 
 main {
   width: 100%;
-  padding-left: 5%;
-  padding-rigHt: 5%;
+  padding-left: 2%;
+  padding-rigHt: 2%;
   padding-top: 1%;
 }
 
@@ -138,6 +141,7 @@ main {
   max-width: 200px;
   padding: 10px;
   background-color: white;
+  text-align: center;
 }
 
 .form-container input {
@@ -150,16 +154,9 @@ main {
 }
 
 .form-container button {
-  margin: 10px;
-}
-
-.form-popup {
-  /* display: none; */
-  position: absolute;
-  background-color: #f9f9f9;
-  border: 1px solid #ccc;
-  padding: 10px;
-  z-index: 1;
+  width:100px;
+  height:40px;
+  border-radius: 25px;
 }
 
 .reservationHeader {

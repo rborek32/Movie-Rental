@@ -51,26 +51,38 @@
             <tr v-for="reservation in reservations" :key="reservation.id">
               <td>{{ reservation.id }}</td>
               <td>{{ reservation.movieTitle }}</td>
-              <td>{{ reservation.startDate }}</td>
-              <td>{{ reservation.endDate }}</td>
-              <td><button class="btn btn-success" @click="showEditForm(reservation)">Show</button></td>
-              <td><button class="btn btn-danger" @click="cancellReservation(reservation.id)">Cancell</button></td>
+              <td>{{ formatDate(reservation.startDate) }}</td>
+              <td>{{ formatDate(reservation.endDate) }}</td>
+              <td><button class="btn btn-success" @click="showEditForm(reservation)">Edit</button></td>
+              <td><button class="btn btn-danger" @click="cancellReservation(reservation.id)">Remove</button></td>
             </tr>
 
             <tr v-if="editingReservation">
-              <td colspan="6">
-                <form @submit.prevent="updateReservation">
-                  <label for="startDate">Start Date:</label>
-                  <input type="date" v-model="editedReservation.startDate" id="startDate">
+  <td colspan="6">
+    <form @submit.prevent="updateReservation" class="reservation-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="startDate">Start Date:</label>
+          <input type="date" v-model="editedReservation.startDate" id="startDate" class="form-control">
+        </div>
 
-                  <label for="endDate">End Date:</label>
-                  <input type="date" v-model="editedReservation.endDate" id="endDate">
+        <div class="form-group">
+          <label for="endDate">End Date:</label>
+          <input type="date" v-model="editedReservation.endDate" id="endDate" class="form-control">
+        </div>
+      </div>
 
-                  <button class="btn btn-success" @click="editReservation(editedReservation.id)">Edit</button>
-                  <button class="btn btn-secondary" @click="cancelEdit">Cancel</button>
-                </form>
-              </td>
-            </tr>
+      <div class="form-row button-row">
+        <div class="form-group">
+          <button class="btn btn-success" @click="editReservation()">Edit</button>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-secondary" @click="cancellReservation(id)">Cancel</button>
+        </div>
+      </div>
+    </form>
+  </td>
+</tr>
           </tbody>
         </table>
       </div>
@@ -80,10 +92,58 @@
   
 <style>
 @import "@/assets/styles.css";
+.reservation-form {
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+}
+
+.form-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.button-row {
+  display: flex;
+  justify-content: center; /* Center the buttons horizontally */
+}
+
+.form-group {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid lightblue;
+  border-radius: 4px;
+}
+
+.btn {
+  padding: 8px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-success {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
 </style>
 
 <script>
 import axios from 'axios';
+import moment from 'moment';
 
 export default {
   data() {
@@ -186,6 +246,9 @@ export default {
       this.editedReservation.id = null;
       this.editedReservation.startDate = null;
       this.editedReservation.endDate = null;
+    },
+    formatDate(date) {
+      return moment(date).format('DD-MM-YYYY');
     }
   }
 };

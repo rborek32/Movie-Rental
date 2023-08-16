@@ -6,6 +6,7 @@ namespace MovieRental.Repositories
     {
         List<Movie> GetAllMovies();
         Movie GetMovieById(int id);
+        List<Movie> FilterMoviesV1(string category, decimal? minRating, decimal? maxRating, int? startYear, int? endYear);
         Task InsertMovie<T>(Movie movie);
         Task UpdateMovie<T>(Movie movie);
         Task DeleteMovie<T>(Movie movie);

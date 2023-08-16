@@ -24,6 +24,12 @@ namespace ReservationService.Controllers
             var reservations = _reservationRepository.GetAllReservations();
             return Ok(reservations);
         }
+        
+        [HttpGet("test")]
+        public IActionResult Test()
+        {
+            return Ok("Reservation service works");
+        }
 
         [HttpGet("/amountOf/movieTitle")]
         public async Task<ActionResult<long>> GetAmountOfReservations(string title)

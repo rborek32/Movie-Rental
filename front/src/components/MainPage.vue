@@ -12,37 +12,45 @@
 
   <body class="mainBody">
     <aside>
-      <div class="filter-panel filter-content">
-        <h2>Filter Movies</h2>
+      <div class="filter-panel">
+        <div class="filter-content">
+          <h2>Filter Movies</h2>
 
+          <div class="filter-input-container">
+            <label for="titleInput">Title:</label>
+            <input type="text" id="titleInput" class="filter-input" placeholder="Enter title..." v-model="titleFilter"
+              v-on:keyup.enter="filterByTitle">
+          </div>
 
-        <label for="titleInput">Title:</label>
-        <input type="text" id="titleInput" class="filter-input" placeholder="Enter title..." v-model="titleFilter"
-          v-on:keyup.enter="filterByTitle">
+          <div class="filter-input-container">
+            <label for="genreFilter">Category:</label>
+            <select id="genreFilter" class="filter-select" v-model="selectedGenre">
+              <option value="All">All</option>
+              <option value="Horror">Horror</option>
+              <option value="Comedy">Comedy</option>
+            </select>
+          </div>
 
-        <div class="filter-input-container">
-          <label for="genreFilter">Category:</label>
-          <select id="genreFilter" class="filter-select" v-model="selectedGenre">
-            <option value="All">All</option>
-            <option value="Horror">Horror</option>
-            <option value="Comedy">Comedy</option>
-          </select>
-        </div>
+          <div class="filter-input-container">
+            <label for="fromYearInput">Date range:</label>
+            <input type="number" id="fromYearInput" class="filter-input" placeholder="From year..." v-model="startYear"
+              v-on:keyup.enter="filterByReleaseDates">
+            <span class="date-range-separator">to</span>
+            <input type="number" class="filter-input" placeholder="To year..." v-model="endYear"
+              v-on:keyup.enter="filterByReleaseDates">
+          </div>
 
-        <div class="filter-input-container">
-          <label for="fromYearInput">Date range:</label>
-          <input type="number" id="fromYearInput" class="filter-input-date" placeholder="From year..." v-model="startYear"
-            v-on:keyup.enter="filterByReleaseDates">
-          <input type="number" class="filter-input-date" placeholder="To year..." v-model="endYear"
-            v-on:keyup.enter="filterByReleaseDates">
-        </div>
+          <div class="filter-input-container">
+            <label for="ratingRangeInput">Rating range:</label>
+            <input type="number" id="minRatingInput" class="filter-input" placeholder="Min rating..." v-model="minRating"
+              v-on:keyup.enter="filterByRating">
+            <span class="rating-range-separator">to</span>
+            <input type="number" class="filter-input" placeholder="Max rating..." v-model="maxRating"
+              v-on:keyup.enter="filterByRating">
+          </div>
 
-        <div class="filter-input-container">
-          <label for="minRatingInput">Set rating:</label>
-          <input type="number" id="minRatingInput" class="filter-input-date" placeholder="Min..." v-model="minRating"
-            v-on:keyup.enter="filterByRating">
-          <input type="number" class="filter-input-date" placeholder="Max..." v-model="maxRating"
-            v-on:keyup.enter="filterByRating">
+          <button class="btn btn-success" @click="filterMovies()">Filter!</button>
+
         </div>
       </div>
     </aside>
@@ -55,8 +63,10 @@
             <tr>
               <th scope="col" @click="sortBy('movieId')" :class="{ 'active-column': sortByColumn === 'movieId' }">Id</th>
               <th scope="col" @click="sortBy('title')" :class="{ 'active-column': sortByColumn === 'title' }">Title</th>
-              <th scope="col" @click="sortBy('movieCategory')" :class="{ 'active-column': sortByColumn === 'movieCategory' }">Category</th>
-              <th scope="col" @click="sortBy('rating')" :class="{ 'active-column': sortByColumn === 'rating' }">Rating</th>
+              <th scope="col" @click="sortBy('movieCategory')"
+                :class="{ 'active-column': sortByColumn === 'movieCategory' }">Category</th>
+              <th scope="col" @click="sortBy('rating')" :class="{ 'active-column': sortByColumn === 'rating' }">Rating
+              </th>
               <th scope="col" @click="sortBy('releaseDate')" :class="{ 'active-column': sortByColumn === 'releaseDate' }">
                 Release Date</th>
             </tr>
@@ -81,6 +91,7 @@
   
 <style>
 @import "@/assets/styles.css";
+@import "@/assets/filterPanelStyles.css";
 </style>
 
 <script>
@@ -108,11 +119,8 @@ export default {
     this.getMovies();
   },
   computed: {
-    filteredMovies() {
-      return this.selectedGenre === 'All' ? this.movies : this.movies.filter(movie => movie.movieCategory === this.selectedGenre);
-    },
     sortedMovies() {
-      const sorted = [...this.filteredMovies];
+      const sorted = [...this.movies];
       sorted.sort((a, b) => {
         const modifier = this.sortDirection === 'asc' ? 1 : -1;
         const column = this.sortByColumn;
@@ -150,19 +158,19 @@ export default {
       document.getElementById(formId).style.display = 'none';
     },
     filterByTitle() {
-      if(this.titleFilter == null || this.titleFilter == ""){
+      if (this.titleFilter == null || this.titleFilter == "") {
         this.getMovies();
       }
-      else{
+      else {
         axios.get(`${process.env.VUE_APP_BACKEND_URL}/api/movies/titleContains`, {
-        params: { title: this.titleFilter }
-      })
-        .then((response) => {
-          this.movies = response.data;
+          params: { title: this.titleFilter }
         })
-        .catch((error) => {
-          console.error('Error filtering movies by title:', error);
-        });
+          .then((response) => {
+            this.movies = response.data;
+          })
+          .catch((error) => {
+            console.error('Error filtering movies by title:', error);
+          });
       }
     },
     filterByReleaseDates() {
@@ -193,9 +201,23 @@ export default {
           console.error('Error filtering movies by dates:', error);
         });
     },
-    redirectToReservations(movie) {
-      console.log(movie.movieId, movie.title, movie.movieCategory, movie.rating, movie.releaseDate);
+    async filterMovies() {
+      const params = {
+        category: this.selectedGenre,
+        minRating: this.minRating,
+        maxRating: this.maxRating,
+        startYear: this.startYear,
+        endYear: this.endYear
+      };
 
+      try {
+        const response = await axios.get(`${process.env.VUE_APP_BACKEND_URL}/api/movies/filterMovies`, { params });
+        this.movies = response.data;
+      } catch (error) {
+        console.error('Error filtering movies:', error);
+      }
+    },
+    redirectToReservations(movie) {
       this.$router.push({
         name: 'reservations',
         query: {

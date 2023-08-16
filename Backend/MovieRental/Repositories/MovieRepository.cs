@@ -21,6 +21,39 @@ namespace MovieRental.Repositories
             return _collection.Find(new BsonDocument()).ToList();
         }
 
+        public List<Movie> FilterMoviesV1(string category, decimal? minRating, decimal? maxRating, int? startYear,
+            int? endYear)
+        {
+            var filter = Builders<Movie>.Filter.Empty;
+            
+            if (!string.IsNullOrEmpty(category) && category != "All")
+            {
+                filter &= Builders<Movie>.Filter.Eq(r => r.MovieCategory, category);
+            }
+
+            if (minRating != null)
+            {
+                filter &= Builders<Movie>.Filter.Gte(r => r.Rating, minRating);
+            }
+
+            if (maxRating != null)
+            {
+                filter &= Builders<Movie>.Filter.Lte(r => r.Rating, maxRating);
+            }
+
+            if (startYear != null)
+            {
+                filter &= Builders<Movie>.Filter.Gte(r => r.ReleaseDate, startYear);
+            }
+            
+            if (endYear != null)
+            {
+                filter &= Builders<Movie>.Filter.Lte(r => r.ReleaseDate, endYear);
+            }
+
+            return _collection.Find(filter).ToList();
+        }
+        
         public Movie GetMovieById(int id)
         {
             var filter = Builders<Movie>.Filter.Eq(h => h.MovieId, id);
