@@ -132,7 +132,7 @@ namespace MovieRental.Repositories
 
         public async Task UpdateMovie<T>(Movie movie)
         {
-            var filter = Builders<Movie>.Filter.Eq(h => h.Id, movie.Id);
+            var filter = Builders<Movie>.Filter.Eq(h => h.MovieId, movie.MovieId);
             _collection.ReplaceOne(filter, movie);
         }
 
