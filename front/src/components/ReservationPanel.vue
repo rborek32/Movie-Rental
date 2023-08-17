@@ -4,7 +4,6 @@
     <nav class="navbar">
       <ul class="nav_buttons">
         <router-link to="/">Home</router-link>
-        <a href="#">Contact</a>
         <router-link to="/admin-panel">Admin</router-link>
       </ul>
     </nav>
@@ -54,7 +53,7 @@
           <tbody>
             <tr v-for="reservation in reservations" :key="reservation.id">
               <td>{{ reservation.movieTitle }}</td>
-              <td>{{ formatDate(reservation.startDate)}}</td>
+              <td>{{ formatDate(reservation.startDate) }}</td>
               <td>{{ formatDate(reservation.endDate) }}</td>
             </tr>
           </tbody>

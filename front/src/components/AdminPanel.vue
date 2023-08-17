@@ -4,7 +4,6 @@
     <nav class="navbar">
       <ul class="nav_buttons">
         <router-link to="/">Home</router-link>
-        <a href="#">Contact</a>
         <router-link to="/admin-panel">Admin</router-link>
       </ul>
     </nav>
@@ -35,6 +34,7 @@
         </div>
       </div>
     </aside>
+    
     <main>
       <div class="table-responsive">
         <h2>Reservations</h2>
@@ -58,31 +58,31 @@
             </tr>
 
             <tr v-if="editingReservation">
-  <td colspan="6">
-    <form @submit.prevent="updateReservation" class="reservation-form">
-      <div class="form-row">
-        <div class="form-group">
-          <label for="startDate">Start Date:</label>
-          <input type="date" v-model="editedReservation.startDate" id="startDate" class="form-control">
-        </div>
+              <td colspan="6">
+                <form @submit.prevent="updateReservation" class="reservation-form">
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label for="startDate">Start Date:</label>
+                      <input type="date" v-model="editedReservation.startDate" id="startDate" class="form-control">
+                    </div>
 
-        <div class="form-group">
-          <label for="endDate">End Date:</label>
-          <input type="date" v-model="editedReservation.endDate" id="endDate" class="form-control">
-        </div>
-      </div>
+                    <div class="form-group">
+                      <label for="endDate">End Date:</label>
+                      <input type="date" v-model="editedReservation.endDate" id="endDate" class="form-control">
+                    </div>
+                  </div>
 
-      <div class="form-row button-row">
-        <div class="form-group">
-          <button class="btn btn-success" @click="editReservation()">Edit</button>
-        </div>
-        <div class="form-group">
-          <button class="btn btn-secondary" @click="cancellReservation(id)">Cancel</button>
-        </div>
-      </div>
-    </form>
-  </td>
-</tr>
+                  <div class="form-row button-row">
+                    <div class="form-group">
+                      <button class="btn btn-success" @click="editReservation()">Edit</button>
+                    </div>
+                    <div class="form-group">
+                      <button class="btn btn-secondary" @click="cancellReservation(id)">Cancel</button>
+                    </div>
+                  </div>
+                </form>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -91,54 +91,8 @@
 </template>
   
 <style>
+@import "@/assets/adminStyles.css";
 @import "@/assets/styles.css";
-.reservation-form {
-  margin-top: 10px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  background-color: #f9f9f9;
-  border-radius: 5px;
-}
-
-.form-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-
-.button-row {
-  display: flex;
-  justify-content: center;
-}
-
-.form-group {
-  flex: 1;
-  margin-right: 10px;
-}
-
-.form-control {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid lightblue;
-  border-radius: 4px;
-}
-
-.btn {
-  padding: 8px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.btn-success {
-  background-color: #28a745;
-  color: white;
-}
-
-.btn-secondary {
-  background-color: #6c757d;
-  color: white;
-}
 </style>
 
 <script>
