@@ -203,6 +203,7 @@ export default {
     },
     async filterMovies() {
       const params = {
+        title: this.titleFilter,
         category: this.selectedGenre,
         minRating: this.minRating,
         maxRating: this.maxRating,

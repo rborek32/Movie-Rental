@@ -41,7 +41,7 @@ namespace MovieRental.Controllers
         {
             var movies = _movieRepository.GetAllMovies();
 
-            if (!string.IsNullOrEmpty(title) && title != "All")
+            if (title != null)
             {
                 movies = movies.Where(movie => movie.Title == title).ToList();
             }

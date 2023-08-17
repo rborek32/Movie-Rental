@@ -109,7 +109,7 @@
 
 .button-row {
   display: flex;
-  justify-content: center; /* Center the buttons horizontally */
+  justify-content: center;
 }
 
 .form-group {
@@ -179,20 +179,21 @@ export default {
         rating: this.rating
       };
 
-      axios.post(`${process.env.VUE_APP_BACKEND_URL}/api/movies`, newMovieBody).then((response) => {
+      axios.post(`${process.env.VUE_APP_BACKEND_URL}/api/movies/addMovie`, newMovieBody).then((response) => {
         console.log(`${process.env.VUE_APP_BACKEND_URL}/movies`
           + "\nMovie added successfully:", response.data);
       });
     },
     updateMovie() {
       const updatedMovieBody = {
-        movie: this.newMovieName,
-        rating: this.newMovieRating
+        movieId: this.movieId,
+        title: this.title,
+        movieCategory: this.movieCategory,
+        releaseDate: this.releaseDate,
+        rating: this.rating
       }
-      var id = this.movieId;
-      axios.put(`${process.env.VUE_APP_BACKEND_URL}/update/${id}`, updatedMovieBody).then((response) => {
-        console.log(`${process.env.VUE_APP_BACKEND_URL}/update/${id}`
-          + "\nMovie updated successfully:", response.data);
+      axios.put(`${process.env.VUE_APP_BACKEND_URL}/api/movies/updateMovie`, updatedMovieBody).then((response) => {
+        console.log("Movie updated successfully:", response.data);
       });
 
     },
