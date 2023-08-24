@@ -9,4 +9,4 @@ Main page:
 Reservation page:
 ![image](https://github.com/rborek32/Movie-Rental/assets/92055063/79064bd9-e7b7-4aba-b071-02a27528afb3)
 Admin panel:
-![image](https://github.com/rborek32/Movie-Rental/assets/92055063/5e22ae73-f389-4d7e-b8fd-a71e29c12d16)
+![image](https://github.com/rborek32/Movie-Rental/assets/92055063/6c5ab043-de36-498d-a05a-bbf5bc59013e)
