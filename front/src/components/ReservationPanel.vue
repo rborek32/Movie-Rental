@@ -21,7 +21,7 @@
       </div>
 
       <aside class="reservationDetails">
-        <p><strong>Movie ID:</strong> {{ movieId }}</p>
+        <p><strong>Movie ID:</strong> {{ id }}</p>
         <p><strong>Title:</strong> {{ title }}</p>
         <p><strong>Category:</strong> {{ movieCategory }}</p>
         <p><strong>Rating:</strong> {{ rating }}</p>
@@ -81,7 +81,7 @@ export default {
     return {
       startDate: "",
       endDate: "",
-      movieId: null,
+      id: null,
       title: "",
       movieCategory: null,
       rating: null,
@@ -92,7 +92,7 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      vm.movieId = to.query.movieId;
+      vm.id = to.query.id;
       vm.title = to.query.title;
       vm.movieCategory = to.query.movieCategory;
       vm.rating = to.query.rating;
@@ -114,7 +114,7 @@ export default {
     },
     async addReservation() {
       const reservationBody = {
-        id: this.movieId,
+        id: this.id,
         startDate: this.startDate,
         endDate: this.endDate,
         movieTitle: this.title

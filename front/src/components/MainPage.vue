@@ -49,6 +49,7 @@
           </div>
 
           <button class="btn btn-success" @click="filterMovies()">Filter!</button>
+          <button class="btn btn-danger" style="margin: 10px" @click="clearFilters()">Clear!</button>
 
         </div>
       </div>
@@ -60,7 +61,7 @@
         <table class="table table-striped table-hover">
           <thead class="thead-dark">
             <tr>
-              <th scope="col" @click="sortBy('movieId')" :class="{ 'active-column': sortByColumn === 'movieId' }">Id</th>
+              <th scope="col" @click="sortBy('id')" :class="{ 'active-column': sortByColumn === 'id' }">Id</th>
               <th scope="col" @click="sortBy('title')" :class="{ 'active-column': sortByColumn === 'title' }">Title</th>
               <th scope="col" @click="sortBy('movieCategory')"
                 :class="{ 'active-column': sortByColumn === 'movieCategory' }">Category</th>
@@ -71,8 +72,8 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="movie in sortedMovies" :key="movie.movieId">
-              <td>{{ movie.movieId }}</td>
+            <tr v-for="movie in sortedMovies" :key="movie.id">
+              <td>{{ movie.id }}</td>
               <td>{{ movie.title }}</td>
               <td>{{ movie.movieCategory }}</td>
               <td>{{ movie.rating }}</td>
@@ -100,10 +101,10 @@ export default {
   data() {
     return {
       movies: [],
-      sortByColumn: 'movieId',
+      sortByColumn: 'id',
       sortDirection: 'asc',
       selectedGenre: 'All',
-      movieId: null,
+      id: null,
       newMovieName: '',
       newMovieRating: '',
       selectedAction: null,
@@ -149,11 +150,11 @@ export default {
       }
     },
     openForm(movie) {
-      const formId = 'myForm_' + movie.movieId;
+      const formId = 'myForm_' + movie.id;
       document.getElementById(formId).style.display = 'block';
     },
     closeForm(movie) {
-      const formId = 'myForm_' + movie.movieId;
+      const formId = 'myForm_' + movie.id;
       document.getElementById(formId).style.display = 'none';
     },
     filterByTitle() {
@@ -217,11 +218,35 @@ export default {
         console.error('Error filtering movies:', error);
       }
     },
+    async clearFilters() {
+      this.titleFilter = "";
+      this.selectedGenre = "All";
+      this.startYear = null;
+      this.endYear = null;
+      this.minRating = null;
+      this.maxRating = null;
+      
+      const params = {
+        title: null,
+        category: null,
+        minRating: null,
+        maxRating: null,
+        startYear: null,
+        endYear: null
+      };
+
+      try {
+        const response = await axios.get(`${process.env.VUE_APP_BACKEND_URL}/api/movies/filterMovies`, { params });
+        this.movies = response.data;
+      } catch (error) {
+        console.error('Error filtering movies:', error);
+      }
+    },
     redirectToReservations(movie) {
       this.$router.push({
         name: 'reservations',
         query: {
-          movieId: movie.movieId,
+          id: movie.id,
           title: movie.title,
           movieCategory: movie.movieCategory,
           rating: movie.rating,

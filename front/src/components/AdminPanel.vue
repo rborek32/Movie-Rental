@@ -16,7 +16,7 @@
         <form class="form-horizontal">
           <div class="form-group">
             <label class="control-label">Id</label>
-            <input type="number" class="form-control" v-model="movieId" required>
+            <input type="number" class="form-control" v-model="id" required>
             <label class="control-label">Title</label>
             <input type="text" class="form-control" v-model="title" required>
             <label class="text">Category</label>
@@ -77,7 +77,7 @@
                       <button class="btn btn-success" @click="editReservation()">Edit</button>
                     </div>
                     <div class="form-group">
-                      <button class="btn btn-secondary" @click="cancellReservation(id)">Cancel</button>
+                      <button class="btn btn-secondary" @click="cancelEdit()">Cancel</button>
                     </div>
                   </div>
                 </form>
@@ -102,7 +102,6 @@ import moment from 'moment';
 export default {
   data() {
     return {
-      movieId: 0,
       title: "",
       movieCategory: "",
       releaseDate: 0,
@@ -126,7 +125,7 @@ export default {
   methods: {
     addMovie() {
       const newMovieBody = {
-        movieId: this.movieId,
+        id: this.id,
         title: this.title,
         movieCategory: this.movieCategory,
         releaseDate: this.releaseDate,
@@ -140,7 +139,7 @@ export default {
     },
     updateMovie() {
       const updatedMovieBody = {
-        movieId: this.movieId,
+        id: this.id,
         title: this.title,
         movieCategory: this.movieCategory,
         releaseDate: this.releaseDate,
@@ -152,7 +151,7 @@ export default {
 
     },
     deleteMovie() {
-      var id = this.movieId;
+      var id = this.id;
       axios.delete(`${process.env.VUE_APP_BACKEND_URL}/api/movies/${id}`).then((response) => {
         console.log(`${process.env.VUE_APP_BACKEND_URL}/delete/${id}`
           + "\nMovie deleted successfully:", response.data);
