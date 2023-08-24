@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using MovieRental.Models;
 using MovieRental.Repositories;
 using System.IO;
+using FluentAssertions;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 
@@ -27,15 +28,7 @@ namespace MovieRental.Controllers
             var movies = _movieRepository.GetAllMovies();
             return Ok(movies);
         }
-        
-        [HttpGet("test")]
-        public IActionResult Test()
-        {
-            string solutionDir = Directory.GetCurrentDirectory();
-            string filePath = Path.Combine(solutionDir, "movies.json");
-            return Ok("Movie service works" + filePath);
-        }
-        
+
         [HttpGet("filterMovies")]
         public IActionResult FilterMovies([FromQuery] string? title, string? category, decimal? minRating, decimal? maxRating, int? startYear, int? endYear)
         {
@@ -71,27 +64,6 @@ namespace MovieRental.Controllers
                 movies = movies.Where(movie => movie.ReleaseDate <= endYear).ToList();
             }
 
-            return Ok(movies);
-        }
-
-        [HttpGet("{category}")]
-        public IActionResult GetMovieByCategory(string category)
-        {
-            var movies = _movieRepository.GetMoviesByCategory(category);
-            return Ok(movies);
-        }
-
-        [HttpGet("getMoviesBetweenYears")]
-        public IActionResult GetMoviesBetweenYears([FromQuery] int? startYear, int? endYear)
-        {
-            var movies = _movieRepository.GetMoviesBetweenYears(startYear, endYear);
-            return Ok(movies);
-        }
-        
-        [HttpGet("getMoviesWithRating")]
-        public IActionResult GetMoviesWithRating([FromQuery] decimal? minRating, decimal? maxRating)
-        {
-            var movies = _movieRepository.GetMoviesWithRating(minRating, maxRating);
             return Ok(movies);
         }
 
@@ -150,7 +122,7 @@ namespace MovieRental.Controllers
             }
         }
         
-        [HttpPost("initialize")]
+        [HttpPost("initializeMovieDB")]
         public async Task<IActionResult> InitializeMovies()
         {
             try
@@ -178,6 +150,12 @@ namespace MovieRental.Controllers
             {
                 return BadRequest($"Failed to initialize movies. Error: {ex.Message}");
             }
+        }
+        
+        [HttpGet("HelloWorld")]
+        public IActionResult Test()
+        {
+            return Ok("Hello, World!");
         }
     }
 }
